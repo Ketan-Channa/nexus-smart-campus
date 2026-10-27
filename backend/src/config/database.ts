@@ -1,5 +1,7 @@
 import mysql from 'mysql2/promise';
 import dotenv from 'dotenv';
+import fs from 'node:fs';
+import path from 'node:path';
 
 dotenv.config();
 
@@ -9,12 +11,24 @@ const DB_USER = process.env.DB_USER || 'root';
 const DB_PASSWORD = process.env.DB_PASSWORD || '';
 const DB_NAME = process.env.DB_NAME || 'nexus_campus_db';
 
+const DB_SSL_CA_PATH = process.env.DB_SSL_CA_PATH;
+
+const DB_SSL = {
+  minVersion: 'TLSv1.2' as const,
+  ...(DB_SSL_CA_PATH
+    ? {
+      ca: fs.readFileSync(path.resolve(DB_SSL_CA_PATH), 'utf8'),
+    }
+    : {}),
+};
+
 export const pool = mysql.createPool({
   host: DB_HOST,
   port: DB_PORT,
   user: DB_USER,
   password: DB_PASSWORD,
   database: DB_NAME,
+  ssl: DB_SSL,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
@@ -38,16 +52,6 @@ const ensureTableColumns = async (conn: any, tableName: string, columnsDef: { na
 
 export const initializeDatabaseSchema = async () => {
   try {
-    const rootConn = await mysql.createConnection({
-      host: DB_HOST,
-      port: DB_PORT,
-      user: DB_USER,
-      password: DB_PASSWORD,
-    });
-
-    await rootConn.query(`CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`;`);
-    await rootConn.end();
-
     const conn = await pool.getConnection();
 
     // 1. Students table
@@ -144,7 +148,7 @@ export const initializeDatabaseSchema = async () => {
 
     try {
       await conn.query(`ALTER TABLE students ADD COLUMN is_active INT DEFAULT 1`);
-    } catch (e) {}
+    } catch (e) { }
 
     const studentMigrations = [
       `ALTER TABLE students ADD COLUMN admission_number VARCHAR(100)`,
@@ -190,18 +194,18 @@ export const initializeDatabaseSchema = async () => {
       `ALTER TABLE students ADD COLUMN medical_app_ref VARCHAR(100) DEFAULT NULL`,
     ];
     for (const q of studentMigrations) {
-      try { await conn.query(q); } catch (e) {}
+      try { await conn.query(q); } catch (e) { }
     }
 
     try {
       await conn.query(`ALTER TABLE faculties ADD COLUMN is_class_incharge VARCHAR(10) DEFAULT 'No'`);
-    } catch (e) {}
+    } catch (e) { }
     try {
       await conn.query(`ALTER TABLE faculties ADD COLUMN incharge_class VARCHAR(100) DEFAULT NULL`);
-    } catch (e) {}
+    } catch (e) { }
     try {
       await conn.query(`ALTER TABLE faculties ADD COLUMN section VARCHAR(20) DEFAULT NULL`);
-    } catch (e) {}
+    } catch (e) { }
 
     // 2b. Classes table (Real Database Relationship Entity)
     await conn.query(`
@@ -354,7 +358,7 @@ export const initializeDatabaseSchema = async () => {
 
     try {
       await conn.query(`ALTER TABLE attendance MODIFY COLUMN status VARCHAR(50) NOT NULL DEFAULT 'Present'`);
-    } catch (e) {}
+    } catch (e) { }
 
     // 2i. Attendance Audit Log table (Audit Trail for Modifications & Corrections)
     await conn.query(`
@@ -400,14 +404,14 @@ export const initializeDatabaseSchema = async () => {
       );
     `);
 
-    try { await conn.query(`ALTER TABLE assignments ADD COLUMN title VARCHAR(255) DEFAULT NULL`); } catch (e) {}
-    try { await conn.query(`ALTER TABLE assignments ADD COLUMN subject VARCHAR(150) DEFAULT NULL`); } catch (e) {}
-    try { await conn.query(`ALTER TABLE assignments ADD COLUMN class_name VARCHAR(100) DEFAULT NULL`); } catch (e) {}
-    try { await conn.query(`ALTER TABLE assignments ADD COLUMN faculty_email VARCHAR(150) DEFAULT NULL`); } catch (e) {}
-    try { await conn.query(`ALTER TABLE assignments ADD COLUMN attachment_url LONGTEXT DEFAULT NULL`); } catch (e) {}
-    try { await conn.query(`ALTER TABLE assignments MODIFY COLUMN topic_name VARCHAR(255) DEFAULT NULL`); } catch (e) {}
-    try { await conn.query(`ALTER TABLE assignments MODIFY COLUMN subject_name VARCHAR(150) DEFAULT NULL`); } catch (e) {}
-    try { await conn.query(`ALTER TABLE assignments MODIFY COLUMN status VARCHAR(50) DEFAULT 'Published'`); } catch (e) {}
+    try { await conn.query(`ALTER TABLE assignments ADD COLUMN title VARCHAR(255) DEFAULT NULL`); } catch (e) { }
+    try { await conn.query(`ALTER TABLE assignments ADD COLUMN subject VARCHAR(150) DEFAULT NULL`); } catch (e) { }
+    try { await conn.query(`ALTER TABLE assignments ADD COLUMN class_name VARCHAR(100) DEFAULT NULL`); } catch (e) { }
+    try { await conn.query(`ALTER TABLE assignments ADD COLUMN faculty_email VARCHAR(150) DEFAULT NULL`); } catch (e) { }
+    try { await conn.query(`ALTER TABLE assignments ADD COLUMN attachment_url LONGTEXT DEFAULT NULL`); } catch (e) { }
+    try { await conn.query(`ALTER TABLE assignments MODIFY COLUMN topic_name VARCHAR(255) DEFAULT NULL`); } catch (e) { }
+    try { await conn.query(`ALTER TABLE assignments MODIFY COLUMN subject_name VARCHAR(150) DEFAULT NULL`); } catch (e) { }
+    try { await conn.query(`ALTER TABLE assignments MODIFY COLUMN status VARCHAR(50) DEFAULT 'Published'`); } catch (e) { }
 
     // assignment_submissions table for Phase 4 Student & Faculty Assignment Submissions
     await conn.query(`
@@ -433,7 +437,7 @@ export const initializeDatabaseSchema = async () => {
       );
     `);
 
-    try { await conn.query(`ALTER TABLE assignment_submissions ADD UNIQUE KEY uq_asgn_roll (assignment_id, roll_number)`); } catch (e) {}
+    try { await conn.query(`ALTER TABLE assignment_submissions ADD UNIQUE KEY uq_asgn_roll (assignment_id, roll_number)`); } catch (e) { }
 
     // 3. Alumni table (Single Source of Truth)
     await conn.query(`
@@ -588,7 +592,7 @@ export const initializeDatabaseSchema = async () => {
       `ALTER TABLE alumni_events ADD COLUMN registered_count INT DEFAULT 0`,
     ];
     for (const q of eventMigrations) {
-      try { await conn.query(q); } catch (e) {}
+      try { await conn.query(q); } catch (e) { }
     }
 
     // 3g. Alumni Collaborations
@@ -808,13 +812,13 @@ export const initializeDatabaseSchema = async () => {
     `);
 
     // Dynamic Column Migrations for timetables
-    try { await conn.query('ALTER TABLE timetables ADD COLUMN timetable_id VARCHAR(100) DEFAULT "ACTIVE_TT_V1"'); } catch (e) {}
-    try { await conn.query('ALTER TABLE timetables ADD COLUMN canonical_class_key VARCHAR(100)'); } catch (e) {}
-    try { await conn.query('ALTER TABLE timetables ADD COLUMN canonical_faculty_key VARCHAR(100)'); } catch (e) {}
-    try { await conn.query('ALTER TABLE timetables ADD COLUMN canonical_venue_key VARCHAR(100)'); } catch (e) {}
-    try { await conn.query('ALTER TABLE timetables ADD COLUMN slot_type VARCHAR(50) DEFAULT "LECTURE"'); } catch (e) {}
-    try { await conn.query('ALTER TABLE timetables ADD COLUMN break_type VARCHAR(50) DEFAULT NULL'); } catch (e) {}
-    try { await conn.query('ALTER TABLE timetables ADD COLUMN is_active TINYINT(1) DEFAULT 1'); } catch (e) {}
+    try { await conn.query('ALTER TABLE timetables ADD COLUMN timetable_id VARCHAR(100) DEFAULT "ACTIVE_TT_V1"'); } catch (e) { }
+    try { await conn.query('ALTER TABLE timetables ADD COLUMN canonical_class_key VARCHAR(100)'); } catch (e) { }
+    try { await conn.query('ALTER TABLE timetables ADD COLUMN canonical_faculty_key VARCHAR(100)'); } catch (e) { }
+    try { await conn.query('ALTER TABLE timetables ADD COLUMN canonical_venue_key VARCHAR(100)'); } catch (e) { }
+    try { await conn.query('ALTER TABLE timetables ADD COLUMN slot_type VARCHAR(50) DEFAULT "LECTURE"'); } catch (e) { }
+    try { await conn.query('ALTER TABLE timetables ADD COLUMN break_type VARCHAR(50) DEFAULT NULL'); } catch (e) { }
+    try { await conn.query('ALTER TABLE timetables ADD COLUMN is_active TINYINT(1) DEFAULT 1'); } catch (e) { }
 
     // 8. Timetable Metadata table
     await conn.query(`
@@ -833,8 +837,8 @@ export const initializeDatabaseSchema = async () => {
       );
     `);
 
-    try { await conn.query('ALTER TABLE timetable_metadata ADD COLUMN timetable_id VARCHAR(100) DEFAULT "ACTIVE_TT_V1"'); } catch (e) {}
-    try { await conn.query('ALTER TABLE timetable_metadata ADD COLUMN is_active TINYINT(1) DEFAULT 1'); } catch (e) {}
+    try { await conn.query('ALTER TABLE timetable_metadata ADD COLUMN timetable_id VARCHAR(100) DEFAULT "ACTIVE_TT_V1"'); } catch (e) { }
+    try { await conn.query('ALTER TABLE timetable_metadata ADD COLUMN is_active TINYINT(1) DEFAULT 1'); } catch (e) { }
 
 
 
@@ -895,10 +899,10 @@ export const initializeDatabaseSchema = async () => {
       );
     `);
 
-    try { await conn.query(`ALTER TABLE medical_certificates ADD COLUMN rejection_reason TEXT`); } catch (e) {}
-    try { await conn.query(`ALTER TABLE medical_certificates ADD COLUMN clarification_request TEXT`); } catch (e) {}
-    try { await conn.query(`ALTER TABLE medical_certificates ADD COLUMN clarification_response TEXT`); } catch (e) {}
-    try { await conn.query(`ALTER TABLE medical_certificates MODIFY COLUMN status VARCHAR(50) NOT NULL DEFAULT 'PENDING'`); } catch (e) {}
+    try { await conn.query(`ALTER TABLE medical_certificates ADD COLUMN rejection_reason TEXT`); } catch (e) { }
+    try { await conn.query(`ALTER TABLE medical_certificates ADD COLUMN clarification_request TEXT`); } catch (e) { }
+    try { await conn.query(`ALTER TABLE medical_certificates ADD COLUMN clarification_response TEXT`); } catch (e) { }
+    try { await conn.query(`ALTER TABLE medical_certificates MODIFY COLUMN status VARCHAR(50) NOT NULL DEFAULT 'PENDING'`); } catch (e) { }
 
     // 10. Student Safety Reports table
     await conn.query(`
@@ -1344,15 +1348,15 @@ export const initializeDatabaseSchema = async () => {
     `);
 
     // Column Migrations for announcements table
-    try { await conn.query('ALTER TABLE announcements ADD COLUMN target_type VARCHAR(50) DEFAULT "ENTIRE_CLASS"'); } catch (e) {}
-    try { await conn.query('ALTER TABLE announcements ADD COLUMN target_department VARCHAR(150) DEFAULT NULL'); } catch (e) {}
-    try { await conn.query('ALTER TABLE announcements ADD COLUMN target_student_email VARCHAR(150) DEFAULT NULL'); } catch (e) {}
-    try { await conn.query('ALTER TABLE announcements ADD COLUMN requires_acknowledgement TINYINT(1) DEFAULT 0'); } catch (e) {}
-    try { await conn.query('ALTER TABLE announcements ADD COLUMN expires_at DATETIME DEFAULT NULL'); } catch (e) {}
-    try { await conn.query('ALTER TABLE announcements ADD COLUMN status VARCHAR(50) DEFAULT "PUBLISHED"'); } catch (e) {}
-    try { await conn.query('ALTER TABLE announcements ADD COLUMN updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'); } catch (e) {}
-    try { await conn.query('ALTER TABLE announcements MODIFY COLUMN priority VARCHAR(50) DEFAULT "Normal"'); } catch (e) {}
-    try { await conn.query('ALTER TABLE announcements MODIFY COLUMN target_audience VARCHAR(100) DEFAULT "Class"'); } catch (e) {}
+    try { await conn.query('ALTER TABLE announcements ADD COLUMN target_type VARCHAR(50) DEFAULT "ENTIRE_CLASS"'); } catch (e) { }
+    try { await conn.query('ALTER TABLE announcements ADD COLUMN target_department VARCHAR(150) DEFAULT NULL'); } catch (e) { }
+    try { await conn.query('ALTER TABLE announcements ADD COLUMN target_student_email VARCHAR(150) DEFAULT NULL'); } catch (e) { }
+    try { await conn.query('ALTER TABLE announcements ADD COLUMN requires_acknowledgement TINYINT(1) DEFAULT 0'); } catch (e) { }
+    try { await conn.query('ALTER TABLE announcements ADD COLUMN expires_at DATETIME DEFAULT NULL'); } catch (e) { }
+    try { await conn.query('ALTER TABLE announcements ADD COLUMN status VARCHAR(50) DEFAULT "PUBLISHED"'); } catch (e) { }
+    try { await conn.query('ALTER TABLE announcements ADD COLUMN updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'); } catch (e) { }
+    try { await conn.query('ALTER TABLE announcements MODIFY COLUMN priority VARCHAR(50) DEFAULT "Normal"'); } catch (e) { }
+    try { await conn.query('ALTER TABLE announcements MODIFY COLUMN target_audience VARCHAR(100) DEFAULT "Class"'); } catch (e) { }
 
     // 33. Announcement Acknowledgements Table
     await conn.query(`
@@ -1544,22 +1548,22 @@ export const initializeDatabaseSchema = async () => {
     `);
 
     // Column Migrations for Emergency SOS Alerts table
-    try { await conn.query('ALTER TABLE emergency_sos_alerts ADD COLUMN responders_count INT DEFAULT 0'); } catch (e) {}
-    try { await conn.query('ALTER TABLE emergency_sos_alerts ADD COLUMN max_responders INT DEFAULT 5'); } catch (e) {}
-    try { await conn.query('ALTER TABLE emergency_sos_alerts ADD COLUMN resolved_by VARCHAR(150) DEFAULT NULL'); } catch (e) {}
-    try { await conn.query('ALTER TABLE emergency_sos_alerts ADD COLUMN resolution_notes TEXT DEFAULT NULL'); } catch (e) {}
-    try { await conn.query('ALTER TABLE emergency_sos_alerts ADD COLUMN resolved_at TIMESTAMP NULL DEFAULT NULL'); } catch (e) {}
+    try { await conn.query('ALTER TABLE emergency_sos_alerts ADD COLUMN responders_count INT DEFAULT 0'); } catch (e) { }
+    try { await conn.query('ALTER TABLE emergency_sos_alerts ADD COLUMN max_responders INT DEFAULT 5'); } catch (e) { }
+    try { await conn.query('ALTER TABLE emergency_sos_alerts ADD COLUMN resolved_by VARCHAR(150) DEFAULT NULL'); } catch (e) { }
+    try { await conn.query('ALTER TABLE emergency_sos_alerts ADD COLUMN resolution_notes TEXT DEFAULT NULL'); } catch (e) { }
+    try { await conn.query('ALTER TABLE emergency_sos_alerts ADD COLUMN resolved_at TIMESTAMP NULL DEFAULT NULL'); } catch (e) { }
 
     // Column Migrations for Canteen Orders table (Cabin Delivery support)
-    try { await conn.query("ALTER TABLE canteen_orders ADD COLUMN delivery_type ENUM('Pickup', 'Cabin Delivery') DEFAULT 'Pickup'"); } catch (e) {}
-    try { await conn.query('ALTER TABLE canteen_orders ADD COLUMN cabin_building VARCHAR(100) DEFAULT NULL'); } catch (e) {}
-    try { await conn.query('ALTER TABLE canteen_orders ADD COLUMN cabin_department VARCHAR(100) DEFAULT NULL'); } catch (e) {}
-    try { await conn.query('ALTER TABLE canteen_orders ADD COLUMN cabin_number VARCHAR(50) DEFAULT NULL'); } catch (e) {}
-    try { await conn.query('ALTER TABLE canteen_orders ADD COLUMN delivery_notes TEXT DEFAULT NULL'); } catch (e) {}
+    try { await conn.query("ALTER TABLE canteen_orders ADD COLUMN delivery_type ENUM('Pickup', 'Cabin Delivery') DEFAULT 'Pickup'"); } catch (e) { }
+    try { await conn.query('ALTER TABLE canteen_orders ADD COLUMN cabin_building VARCHAR(100) DEFAULT NULL'); } catch (e) { }
+    try { await conn.query('ALTER TABLE canteen_orders ADD COLUMN cabin_department VARCHAR(100) DEFAULT NULL'); } catch (e) { }
+    try { await conn.query('ALTER TABLE canteen_orders ADD COLUMN cabin_number VARCHAR(50) DEFAULT NULL'); } catch (e) { }
+    try { await conn.query('ALTER TABLE canteen_orders ADD COLUMN delivery_notes TEXT DEFAULT NULL'); } catch (e) { }
 
     // Column Migrations for Faculties table (Research and Professional fields)
-    try { await conn.query('ALTER TABLE faculties ADD COLUMN research_interests TEXT DEFAULT NULL'); } catch (e) {}
-    try { await conn.query('ALTER TABLE faculties ADD COLUMN professional_links TEXT DEFAULT NULL'); } catch (e) {}
+    try { await conn.query('ALTER TABLE faculties ADD COLUMN research_interests TEXT DEFAULT NULL'); } catch (e) { }
+    try { await conn.query('ALTER TABLE faculties ADD COLUMN professional_links TEXT DEFAULT NULL'); } catch (e) { }
 
     // 42. Parent Meetings Table (Parent Connect Module)
     await conn.query(`
@@ -1661,28 +1665,28 @@ export const initializeDatabaseSchema = async () => {
     `);
 
     // Column Migrations for Parents
-    try { await conn.query('ALTER TABLE parents ADD COLUMN photo_url LONGTEXT DEFAULT NULL'); } catch (e) {}
-    try { await conn.query("ALTER TABLE parents ADD COLUMN preferred_language VARCHAR(50) DEFAULT 'English'"); } catch (e) {}
-    try { await conn.query("ALTER TABLE parents ADD COLUMN verification_status ENUM('PENDING', 'VERIFIED', 'REJECTED', 'SUSPENDED') DEFAULT 'VERIFIED'"); } catch (e) {}
-    try { await conn.query("ALTER TABLE parents ADD COLUMN is_active TINYINT(1) DEFAULT 1"); } catch (e) {}
+    try { await conn.query('ALTER TABLE parents ADD COLUMN photo_url LONGTEXT DEFAULT NULL'); } catch (e) { }
+    try { await conn.query("ALTER TABLE parents ADD COLUMN preferred_language VARCHAR(50) DEFAULT 'English'"); } catch (e) { }
+    try { await conn.query("ALTER TABLE parents ADD COLUMN verification_status ENUM('PENDING', 'VERIFIED', 'REJECTED', 'SUSPENDED') DEFAULT 'VERIFIED'"); } catch (e) { }
+    try { await conn.query("ALTER TABLE parents ADD COLUMN is_active TINYINT(1) DEFAULT 1"); } catch (e) { }
 
     // Column Migrations for Unified Student Approvals
-    try { await conn.query("ALTER TABLE digital_cards MODIFY COLUMN card_type VARCHAR(100) NOT NULL"); } catch (e) {}
-    try { await conn.query("ALTER TABLE digital_cards MODIFY COLUMN status VARCHAR(50) DEFAULT 'Pending Approval'"); } catch (e) {}
-    try { await conn.query("ALTER TABLE digital_cards ADD COLUMN student_name VARCHAR(150)"); } catch (e) {}
-    try { await conn.query("ALTER TABLE digital_cards ADD COLUMN class_name VARCHAR(100)"); } catch (e) {}
-    try { await conn.query("ALTER TABLE digital_cards ADD COLUMN department VARCHAR(150)"); } catch (e) {}
-    try { await conn.query("ALTER TABLE digital_cards ADD COLUMN rejection_reason TEXT"); } catch (e) {}
-    try { await conn.query("ALTER TABLE digital_cards ADD COLUMN clarification_request TEXT"); } catch (e) {}
-    try { await conn.query("ALTER TABLE digital_cards ADD COLUMN clarification_response TEXT"); } catch (e) {}
-    try { await conn.query("ALTER TABLE digital_cards ADD COLUMN internal_notes TEXT"); } catch (e) {}
+    try { await conn.query("ALTER TABLE digital_cards MODIFY COLUMN card_type VARCHAR(100) NOT NULL"); } catch (e) { }
+    try { await conn.query("ALTER TABLE digital_cards MODIFY COLUMN status VARCHAR(50) DEFAULT 'Pending Approval'"); } catch (e) { }
+    try { await conn.query("ALTER TABLE digital_cards ADD COLUMN student_name VARCHAR(150)"); } catch (e) { }
+    try { await conn.query("ALTER TABLE digital_cards ADD COLUMN class_name VARCHAR(100)"); } catch (e) { }
+    try { await conn.query("ALTER TABLE digital_cards ADD COLUMN department VARCHAR(150)"); } catch (e) { }
+    try { await conn.query("ALTER TABLE digital_cards ADD COLUMN rejection_reason TEXT"); } catch (e) { }
+    try { await conn.query("ALTER TABLE digital_cards ADD COLUMN clarification_request TEXT"); } catch (e) { }
+    try { await conn.query("ALTER TABLE digital_cards ADD COLUMN clarification_response TEXT"); } catch (e) { }
+    try { await conn.query("ALTER TABLE digital_cards ADD COLUMN internal_notes TEXT"); } catch (e) { }
 
-    try { await conn.query("ALTER TABLE student_documents ADD COLUMN student_name VARCHAR(150)"); } catch (e) {}
-    try { await conn.query("ALTER TABLE student_documents ADD COLUMN class_name VARCHAR(100)"); } catch (e) {}
-    try { await conn.query("ALTER TABLE student_documents ADD COLUMN department VARCHAR(150)"); } catch (e) {}
-    try { await conn.query("ALTER TABLE student_documents ADD COLUMN verified_by VARCHAR(150)"); } catch (e) {}
-    try { await conn.query("ALTER TABLE student_documents ADD COLUMN rejection_reason TEXT"); } catch (e) {}
-    try { await conn.query("ALTER TABLE student_documents ADD COLUMN clarification_request TEXT"); } catch (e) {}
+    try { await conn.query("ALTER TABLE student_documents ADD COLUMN student_name VARCHAR(150)"); } catch (e) { }
+    try { await conn.query("ALTER TABLE student_documents ADD COLUMN class_name VARCHAR(100)"); } catch (e) { }
+    try { await conn.query("ALTER TABLE student_documents ADD COLUMN department VARCHAR(150)"); } catch (e) { }
+    try { await conn.query("ALTER TABLE student_documents ADD COLUMN verified_by VARCHAR(150)"); } catch (e) { }
+    try { await conn.query("ALTER TABLE student_documents ADD COLUMN rejection_reason TEXT"); } catch (e) { }
+    try { await conn.query("ALTER TABLE student_documents ADD COLUMN clarification_request TEXT"); } catch (e) { }
 
     // Ensure missing columns exist in case tables were created under old schema
     const requiredColumns = [
