@@ -1,0 +1,154 @@
+============================================================================
+NEXUS SMART CAMPUS PLATFORM - MYSQL DATABASE SCHEMA DOCUMENT
+File: nexus_mysql_queries.txt
+Designed and Developed by Ketan Channa & Nitin Kumar
+============================================================================
+
+1. DROP PREVIOUS DATABASE & CREATE FRESH DATABASE
+----------------------------------------------------------------------------
+DROP DATABASE IF EXISTS nexus_campus_db;
+CREATE DATABASE nexus_campus_db;
+USE nexus_campus_db;
+
+
+2. STUDENTS TABLE SCHEMA (Plain Password + Security Questions)
+----------------------------------------------------------------------------
+CREATE TABLE students (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    full_name VARCHAR(150) NOT NULL,
+    roll_number VARCHAR(50) NOT NULL UNIQUE,
+    class VARCHAR(100) NOT NULL,
+    semester VARCHAR(50) NOT NULL,
+    department VARCHAR(150) NOT NULL,
+    dob VARCHAR(50),
+    blood_group VARCHAR(10),
+    gender ENUM('Male', 'Female', 'Other'),
+    photograph_url LONGTEXT,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    mobile VARCHAR(20) NOT NULL,
+    address TEXT NOT NULL,
+    father_name VARCHAR(150),
+    mother_name VARCHAR(150),
+    parent_contact VARCHAR(20),
+    parent_occupation VARCHAR(100),
+    admission_date VARCHAR(50),
+    section VARCHAR(20),
+    hobbies TEXT,
+    interests TEXT,
+    skills TEXT,
+    password VARCHAR(255) NOT NULL,
+    q1 TEXT,
+    a1 VARCHAR(255),
+    q2 TEXT,
+    a2 VARCHAR(255),
+    q3 TEXT,
+    a3 VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+
+3. FACULTIES TABLE SCHEMA
+----------------------------------------------------------------------------
+CREATE TABLE faculties (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    faculty_name VARCHAR(150) NOT NULL,
+    employee_id VARCHAR(50) NOT NULL UNIQUE,
+    department VARCHAR(150) NOT NULL,
+    designation VARCHAR(100) NOT NULL,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    mobile VARCHAR(20) NOT NULL,
+    dob VARCHAR(50),
+    blood_group VARCHAR(10),
+    address TEXT NOT NULL,
+    joining_date VARCHAR(50),
+    subjects_taught TEXT,
+    photograph_url LONGTEXT,
+    password VARCHAR(255) NOT NULL,
+    q1 TEXT,
+    a1 VARCHAR(255),
+    q2 TEXT,
+    a2 VARCHAR(255),
+    q3 TEXT,
+    a3 VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+
+4. PARENTS TABLE SCHEMA
+----------------------------------------------------------------------------
+CREATE TABLE parents (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    parent_name VARCHAR(150) NOT NULL,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    mobile VARCHAR(20) NOT NULL,
+    occupation VARCHAR(100),
+    address TEXT NOT NULL,
+    student_name VARCHAR(150) NOT NULL,
+    student_roll_number VARCHAR(50) NOT NULL,
+    relationship ENUM('Father', 'Mother', 'Guardian') NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    q1 TEXT,
+    a1 VARCHAR(255),
+    q2 TEXT,
+    a2 VARCHAR(255),
+    q3 TEXT,
+    a3 VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+
+5. ALUMNI TABLE SCHEMA
+----------------------------------------------------------------------------
+CREATE TABLE alumni (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    full_name VARCHAR(150) NOT NULL,
+    roll_number VARCHAR(50) NOT NULL UNIQUE,
+    graduation_year VARCHAR(10) NOT NULL,
+    department VARCHAR(150) NOT NULL,
+    current_company VARCHAR(150),
+    current_designation VARCHAR(100),
+    email VARCHAR(150) NOT NULL UNIQUE,
+    mobile VARCHAR(20) NOT NULL,
+    address TEXT NOT NULL,
+    photograph_url LONGTEXT,
+    linkedin_profile TEXT,
+    password VARCHAR(255) NOT NULL,
+    q1 TEXT,
+    a1 VARCHAR(255),
+    q2 TEXT,
+    a2 VARCHAR(255),
+    q3 TEXT,
+    a3 VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+
+6. ADMINISTRATORS TABLE SCHEMA
+----------------------------------------------------------------------------
+CREATE TABLE administrators (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    admin_name VARCHAR(150) NOT NULL UNIQUE,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    mobile VARCHAR(20),
+    department VARCHAR(150) NOT NULL,
+    access_level ENUM('Super Admin', 'Admin', 'Moderator') DEFAULT 'Admin',
+    address TEXT NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    q1 TEXT,
+    a1 VARCHAR(255),
+    q2 TEXT,
+    a2 VARCHAR(255),
+    q3 TEXT,
+    a3 VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+
+7. VERIFICATION QUERY
+----------------------------------------------------------------------------
+SHOW TABLES;
