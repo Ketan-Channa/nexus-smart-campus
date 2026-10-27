@@ -19,7 +19,7 @@ export const AdminAssignmentsWork: React.FC = () => {
   const fetchAssignments = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/admin/assignments');
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/assignments');
       const data = await res.json();
       if (data.status === 'success') {
         setAssignments(data.assignments || []);
@@ -38,7 +38,7 @@ export const AdminAssignmentsWork: React.FC = () => {
   const inspectSubmissions = async (a: any) => {
     setSelectedAssignment(a);
     try {
-      const res = await fetch(`http://localhost:5000/api/admin/assignments/${a.assignment_id || a.id}/submissions`);
+      const res = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/admin/assignments/${a.assignment_id || a.id}/submissions`);
       const data = await res.json();
       if (data.status === 'success') {
         setSubmissions(data.submissions || []);

@@ -34,8 +34,8 @@ export const AdminAttendanceGovernance: React.FC = () => {
     setLoading(true);
     try {
       const [sumRes, sesRes] = await Promise.all([
-        fetch('http://localhost:5000/api/admin/attendance/summary'),
-        fetch('http://localhost:5000/api/admin/attendance/sessions'),
+        fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/attendance/summary'),
+        fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/attendance/sessions'),
       ]);
       const sumData = await sumRes.json();
       const sesData = await sesRes.json();
@@ -56,7 +56,7 @@ export const AdminAttendanceGovernance: React.FC = () => {
     e.preventDefault();
     if (!selectedRecord) return;
     try {
-      const res = await fetch('http://localhost:5000/api/admin/attendance/override', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/attendance/override', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

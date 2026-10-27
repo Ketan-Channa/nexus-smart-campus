@@ -44,8 +44,8 @@ export const AdminDepartmentsClasses: React.FC = () => {
     setLoading(true);
     try {
       const [dRes, cRes] = await Promise.all([
-        fetch('http://localhost:5000/api/admin/departments'),
-        fetch('http://localhost:5000/api/admin/classes'),
+        fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/departments'),
+        fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/classes'),
       ]);
       const dData = await dRes.json();
       const cData = await cRes.json();
@@ -65,7 +65,7 @@ export const AdminDepartmentsClasses: React.FC = () => {
   const handleCreateDept = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/api/admin/departments', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/departments', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(deptForm),
@@ -85,7 +85,7 @@ export const AdminDepartmentsClasses: React.FC = () => {
   const handleCreateClass = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/api/admin/classes', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/classes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(classForm),
@@ -104,7 +104,7 @@ export const AdminDepartmentsClasses: React.FC = () => {
 
   const inspectRoster = async (classCode: string) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/admin/classes/${encodeURIComponent(classCode)}/roster`);
+      const res = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/admin/classes/${encodeURIComponent(classCode)}/roster`);
       const data = await res.json();
       if (data.status === 'success') {
         setSelectedClassRoster({

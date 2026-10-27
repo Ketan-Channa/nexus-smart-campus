@@ -29,7 +29,7 @@ export const FacultyAnnouncements: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/faculty/announcements/create', {
+      await axios.post('https://nexus-smart-campus-backend.onrender.com/api/faculty/announcements/create', {
         title: announcementForm.title,
         message: announcementForm.message,
         category: announcementForm.category,

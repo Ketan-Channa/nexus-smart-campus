@@ -33,9 +33,9 @@ export const AlumniMyActivity: React.FC<AlumniMyActivityProps> = ({ session }) =
     setLoading(true);
     try {
       const [jobsRes, sessRes, refRes] = await Promise.all([
-        fetch('http://localhost:5000/api/alumni/jobs'),
-        fetch(`http://localhost:5000/api/alumni/mentorship/sessions?userEmail=${encodeURIComponent(userEmail)}`),
-        fetch(`http://localhost:5000/api/alumni/referrals?userEmail=${encodeURIComponent(userEmail)}`),
+        fetch('https://nexus-smart-campus-backend.onrender.com/api/alumni/jobs'),
+        fetch(`https://nexus-smart-campus-backend.onrender.com/api/alumni/mentorship/sessions?userEmail=${encodeURIComponent(userEmail)}`),
+        fetch(`https://nexus-smart-campus-backend.onrender.com/api/alumni/referrals?userEmail=${encodeURIComponent(userEmail)}`),
       ]);
 
       const jobsData = await jobsRes.json();

@@ -41,7 +41,7 @@ export const ParentOverviewDashboard: React.FC<ParentOverviewDashboardProps> = (
     setError(null);
     try {
       const res = await fetch(
-        `http://localhost:5000/api/parent/dashboard?email=${encodeURIComponent(
+        `https://nexus-smart-campus-backend.onrender.com/api/parent/dashboard?email=${encodeURIComponent(
           parentEmail
         )}&studentRoll=${encodeURIComponent(selectedChild.roll_number)}`
       );

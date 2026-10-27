@@ -54,7 +54,7 @@ export const AlumniResearchCollaborations: React.FC<AlumniResearchCollaborations
     if (!userEmail) return;
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/alumni/collaborations?userEmail=${encodeURIComponent(userEmail)}`);
+      const res = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/alumni/collaborations?userEmail=${encodeURIComponent(userEmail)}`);
       const data = await res.json();
       if (data.status === 'success') {
         setCollaborations(data.collaborations || []);
@@ -69,7 +69,7 @@ export const AlumniResearchCollaborations: React.FC<AlumniResearchCollaborations
   const handleProposeSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/api/alumni/collaborations/invite', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/alumni/collaborations/invite', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -102,7 +102,7 @@ export const AlumniResearchCollaborations: React.FC<AlumniResearchCollaborations
 
   const handleRespond = async (collabId: string, status: 'ACCEPTED' | 'DECLINED') => {
     try {
-      const res = await fetch(`http://localhost:5000/api/alumni/collaborations/${collabId}/respond`, {
+      const res = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/alumni/collaborations/${collabId}/respond`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status }),

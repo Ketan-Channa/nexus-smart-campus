@@ -61,7 +61,7 @@ export const FacultyUtilities: React.FC<FacultyUtilitiesProps> = ({
   const fetchNotes = useCallback(async () => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/faculty/utilities/notes?email=${encodeURIComponent(facultyEmail)}`
+        `https://nexus-smart-campus-backend.onrender.com/api/faculty/utilities/notes?email=${encodeURIComponent(facultyEmail)}`
       );
       if (res.data && res.data.notes) {
         setNotesList(res.data.notes);
@@ -80,7 +80,7 @@ export const FacultyUtilities: React.FC<FacultyUtilitiesProps> = ({
 
     try {
       if (editingNoteId) {
-        await axios.put(`http://localhost:5000/api/faculty/utilities/notes/${editingNoteId}`, {
+        await axios.put(`https://nexus-smart-campus-backend.onrender.com/api/faculty/utilities/notes/${editingNoteId}`, {
           title: noteTitle,
           content: noteContent,
           category: noteCategory,
@@ -88,7 +88,7 @@ export const FacultyUtilities: React.FC<FacultyUtilitiesProps> = ({
           isArchived: false,
         });
       } else {
-        await axios.post('http://localhost:5000/api/faculty/utilities/notes', {
+        await axios.post('https://nexus-smart-campus-backend.onrender.com/api/faculty/utilities/notes', {
           facultyEmail,
           title: noteTitle,
           content: noteContent,
@@ -110,7 +110,7 @@ export const FacultyUtilities: React.FC<FacultyUtilitiesProps> = ({
   const handleDeleteNote = async (id: number) => {
     if (!window.confirm('Delete this note permanently?')) return;
     try {
-      await axios.delete(`http://localhost:5000/api/faculty/utilities/notes/${id}`);
+      await axios.delete(`https://nexus-smart-campus-backend.onrender.com/api/faculty/utilities/notes/${id}`);
       fetchNotes();
     } catch (err) {
       alert('Failed to delete note');
@@ -119,7 +119,7 @@ export const FacultyUtilities: React.FC<FacultyUtilitiesProps> = ({
 
   const handleTogglePin = async (note: any) => {
     try {
-      await axios.put(`http://localhost:5000/api/faculty/utilities/notes/${note.id}`, {
+      await axios.put(`https://nexus-smart-campus-backend.onrender.com/api/faculty/utilities/notes/${note.id}`, {
         title: note.title,
         content: note.content,
         category: note.category,
@@ -146,7 +146,7 @@ export const FacultyUtilities: React.FC<FacultyUtilitiesProps> = ({
   const fetchTasks = useCallback(async () => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/faculty/utilities/tasks?email=${encodeURIComponent(facultyEmail)}`
+        `https://nexus-smart-campus-backend.onrender.com/api/faculty/utilities/tasks?email=${encodeURIComponent(facultyEmail)}`
       );
       if (res.data && res.data.tasks) {
         setTasksList(res.data.tasks);
@@ -160,7 +160,7 @@ export const FacultyUtilities: React.FC<FacultyUtilitiesProps> = ({
     e.preventDefault();
     if (!taskTitle) return;
     try {
-      await axios.post('http://localhost:5000/api/faculty/utilities/tasks', {
+      await axios.post('https://nexus-smart-campus-backend.onrender.com/api/faculty/utilities/tasks', {
         facultyEmail,
         title: taskTitle,
         description: taskDesc,
@@ -181,7 +181,7 @@ export const FacultyUtilities: React.FC<FacultyUtilitiesProps> = ({
   const handleToggleTaskStatus = async (task: any) => {
     const nextStatus = task.status === 'Completed' ? 'Pending' : 'Completed';
     try {
-      await axios.put(`http://localhost:5000/api/faculty/utilities/tasks/${task.id}`, {
+      await axios.put(`https://nexus-smart-campus-backend.onrender.com/api/faculty/utilities/tasks/${task.id}`, {
         status: nextStatus,
       });
       fetchTasks();
@@ -192,7 +192,7 @@ export const FacultyUtilities: React.FC<FacultyUtilitiesProps> = ({
 
   const handleDeleteTask = async (id: number) => {
     try {
-      await axios.delete(`http://localhost:5000/api/faculty/utilities/tasks/${id}`);
+      await axios.delete(`https://nexus-smart-campus-backend.onrender.com/api/faculty/utilities/tasks/${id}`);
       fetchTasks();
     } catch (err) {
       alert('Failed to delete task');
@@ -222,7 +222,7 @@ export const FacultyUtilities: React.FC<FacultyUtilitiesProps> = ({
     }
     setIsDraftingEmail(true);
     try {
-      const res = await axios.post('http://localhost:5000/api/faculty/utilities/ai/draft-email', {
+      const res = await axios.post('https://nexus-smart-campus-backend.onrender.com/api/faculty/utilities/ai/draft-email', {
         recipient: aiRecipient,
         subject: aiSubject,
         purpose: aiPurpose,
@@ -256,7 +256,7 @@ export const FacultyUtilities: React.FC<FacultyUtilitiesProps> = ({
   const handleGenerateQuestionPaper = async () => {
     setIsGeneratingPaper(true);
     try {
-      const res = await axios.post('http://localhost:5000/api/faculty/utilities/ai/generate-question-paper', {
+      const res = await axios.post('https://nexus-smart-campus-backend.onrender.com/api/faculty/utilities/ai/generate-question-paper', {
         subject: qpSubject,
         topic: qpTopic,
         totalMarks: qpTotalMarks,

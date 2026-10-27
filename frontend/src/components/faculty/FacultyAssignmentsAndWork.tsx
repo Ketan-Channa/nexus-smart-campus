@@ -79,8 +79,8 @@ export const FacultyAssignmentsAndWork: React.FC<FacultyAssignmentsAndWorkProps>
     try {
       const clsQuery = selectedClassFilter !== 'ALL' ? selectedClassFilter : '';
       const [asgnRes, statsRes] = await Promise.all([
-        axios.get(`http://localhost:5000/api/faculty/assignments?email=${encodeURIComponent(facultyEmail)}&className=${encodeURIComponent(clsQuery)}`),
-        axios.get(`http://localhost:5000/api/faculty/assignments/stats?email=${encodeURIComponent(facultyEmail)}&className=${encodeURIComponent(clsQuery)}`),
+        axios.get(`https://nexus-smart-campus-backend.onrender.com/api/faculty/assignments?email=${encodeURIComponent(facultyEmail)}&className=${encodeURIComponent(clsQuery)}`),
+        axios.get(`https://nexus-smart-campus-backend.onrender.com/api/faculty/assignments/stats?email=${encodeURIComponent(facultyEmail)}&className=${encodeURIComponent(clsQuery)}`),
       ]);
 
       if (asgnRes.data && asgnRes.data.success) {
@@ -136,7 +136,7 @@ export const FacultyAssignmentsAndWork: React.FC<FacultyAssignmentsAndWorkProps>
     setLoadingSubmissions(true);
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/faculty/submissions?assignmentId=${asgn.assignmentId}&className=${encodeURIComponent(asgn.className)}&status=${filter}`
+        `https://nexus-smart-campus-backend.onrender.com/api/faculty/submissions?assignmentId=${asgn.assignmentId}&className=${encodeURIComponent(asgn.className)}&status=${filter}`
       );
       if (res.data && res.data.success) {
         setSubmissionsList(res.data.submissions || []);
@@ -183,7 +183,7 @@ export const FacultyAssignmentsAndWork: React.FC<FacultyAssignmentsAndWorkProps>
         description: newDescription,
       };
 
-      const res = await axios.post('http://localhost:5000/api/faculty/assignments/create', payload);
+      const res = await axios.post('https://nexus-smart-campus-backend.onrender.com/api/faculty/assignments/create', payload);
       if (res.data && res.data.success) {
         alert(res.data.message || '✓ Assignment created and published!');
         setIsCreateModalOpen(false);
@@ -216,7 +216,7 @@ export const FacultyAssignmentsAndWork: React.FC<FacultyAssignmentsAndWorkProps>
 
     setSubmittingGrade(true);
     try {
-      const res = await axios.put('http://localhost:5000/api/faculty/submissions/grade', {
+      const res = await axios.put('https://nexus-smart-campus-backend.onrender.com/api/faculty/submissions/grade', {
         submissionId: evaluatingSubmission.submission_id || evaluatingSubmission.submissionId,
         scoredMarks: marksNum,
         facultyRemarks: remarksInput,
@@ -284,7 +284,7 @@ export const FacultyAssignmentsAndWork: React.FC<FacultyAssignmentsAndWorkProps>
         description: editDescription,
       };
 
-      const res = await axios.put(`http://localhost:5000/api/faculty/assignments/${editingAssignment.assignmentId}`, payload);
+      const res = await axios.put(`https://nexus-smart-campus-backend.onrender.com/api/faculty/assignments/${editingAssignment.assignmentId}`, payload);
       if (res.data && res.data.success) {
         alert(res.data.message || '✓ Assignment updated successfully!');
         setEditingAssignment(null);
@@ -303,7 +303,7 @@ export const FacultyAssignmentsAndWork: React.FC<FacultyAssignmentsAndWorkProps>
     }
 
     try {
-      const res = await axios.delete(`http://localhost:5000/api/faculty/assignments/${a.assignmentId}`);
+      const res = await axios.delete(`https://nexus-smart-campus-backend.onrender.com/api/faculty/assignments/${a.assignmentId}`);
       if (res.data && res.data.success) {
         alert(res.data.message || '✓ Assignment deleted!');
         fetchData();

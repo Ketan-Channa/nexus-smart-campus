@@ -23,7 +23,7 @@ import {
 import axios from 'axios';
 import { type UserSession } from '../../types/auth';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://nexus-smart-campus-backend.onrender.com';
 
 interface FacultyProfileProps {
   session?: UserSession | null;

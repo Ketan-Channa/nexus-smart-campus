@@ -21,7 +21,7 @@ export const AdminTimetableManagement: React.FC = () => {
   const fetchTimetables = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/admin/timetables');
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/timetables');
       const data = await res.json();
       if (data.status === 'success') {
         setVersions(data.versions || []);
@@ -40,7 +40,7 @@ export const AdminTimetableManagement: React.FC = () => {
 
   const handleActivate = async (timetableId: string) => {
     try {
-      const res = await fetch('http://localhost:5000/api/admin/timetables/activate', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/timetables/activate', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

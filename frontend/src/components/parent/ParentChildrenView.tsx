@@ -41,7 +41,7 @@ export const ParentChildrenView: React.FC<ParentChildrenViewProps> = ({
     setLinking(true);
     setLinkMsg(null);
     try {
-      const res = await fetch('http://localhost:5000/api/parent/children/link', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/parent/children/link', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

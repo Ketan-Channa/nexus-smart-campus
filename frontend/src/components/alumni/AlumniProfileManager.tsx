@@ -87,7 +87,7 @@ export const AlumniProfileManager: React.FC<AlumniProfileManagerProps> = ({ sess
     if (!alumniEmail) return;
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/alumni/profile/${encodeURIComponent(alumniEmail)}`);
+      const res = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/alumni/profile/${encodeURIComponent(alumniEmail)}`);
       const data = await res.json();
       if (data.status === 'success' && data.alumni) {
         const a = data.alumni;
@@ -133,7 +133,7 @@ export const AlumniProfileManager: React.FC<AlumniProfileManagerProps> = ({ sess
     setSaveSuccess(false);
 
     try {
-      const res = await fetch('http://localhost:5000/api/alumni/profile', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/alumni/profile', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -181,7 +181,7 @@ export const AlumniProfileManager: React.FC<AlumniProfileManagerProps> = ({ sess
   const handleAddExperience = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/api/alumni/experiences', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/alumni/experiences', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -211,7 +211,7 @@ export const AlumniProfileManager: React.FC<AlumniProfileManagerProps> = ({ sess
 
   const handleDeleteExperience = async (id: number) => {
     try {
-      await fetch(`http://localhost:5000/api/alumni/experiences/${id}`, { method: 'DELETE' });
+      await fetch(`https://nexus-smart-campus-backend.onrender.com/api/alumni/experiences/${id}`, { method: 'DELETE' });
       fetchProfile();
     } catch (e) {
       console.error(e);
@@ -221,7 +221,7 @@ export const AlumniProfileManager: React.FC<AlumniProfileManagerProps> = ({ sess
   const handleAddAchievement = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/api/alumni/achievements', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/alumni/achievements', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -249,7 +249,7 @@ export const AlumniProfileManager: React.FC<AlumniProfileManagerProps> = ({ sess
 
   const handleDeleteAchievement = async (id: number) => {
     try {
-      await fetch(`http://localhost:5000/api/alumni/achievements/${id}`, { method: 'DELETE' });
+      await fetch(`https://nexus-smart-campus-backend.onrender.com/api/alumni/achievements/${id}`, { method: 'DELETE' });
       fetchProfile();
     } catch (e) {
       console.error(e);

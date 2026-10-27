@@ -28,8 +28,8 @@ export const AdminSystemHealthSettings: React.FC = () => {
     setLoading(true);
     try {
       const [hRes, sRes] = await Promise.all([
-        fetch('http://localhost:5000/api/admin/system/health'),
-        fetch('http://localhost:5000/api/admin/system-settings'),
+        fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/system/health'),
+        fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/system-settings'),
       ]);
       const hData = await hRes.json();
       const sData = await sRes.json();
@@ -49,7 +49,7 @@ export const AdminSystemHealthSettings: React.FC = () => {
   const handleSaveSettings = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/api/admin/system-settings', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/system-settings', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

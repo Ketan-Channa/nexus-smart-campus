@@ -109,7 +109,7 @@ export const StudentProfileView: React.FC<StudentProfileViewProps> = ({ session,
     try {
       setLoading(true);
       const identifier = session?.email || session?.name || '2301019';
-      const res = await axios.get(`http://localhost:5000/api/auth/student-profile?identifier=${encodeURIComponent(identifier)}`);
+      const res = await axios.get(`https://nexus-smart-campus-backend.onrender.com/api/auth/student-profile?identifier=${encodeURIComponent(identifier)}`);
       if (res.data?.status === 'success' && res.data?.student) {
         const s = res.data.student;
         let parsedSkills: string[] = ['DSA', 'Graphic Designing'];
@@ -260,7 +260,7 @@ export const StudentProfileView: React.FC<StudentProfileViewProps> = ({ session,
     e.preventDefault();
     try {
       const identifier = profile.rollNumber || profile.email || session?.email;
-      await axios.put('http://localhost:5000/api/auth/update-profile', {
+      await axios.put('https://nexus-smart-campus-backend.onrender.com/api/auth/update-profile', {
         role: 'Student',
         identifier,
         ...profile,

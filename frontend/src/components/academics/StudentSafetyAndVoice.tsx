@@ -230,7 +230,7 @@ export const StudentSafetyAndVoice: React.FC<StudentSafetyAndVoiceProps> = ({ se
 
   const fetchStudentReports = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/student-safety/reports?email=${encodeURIComponent(studentEmail)}`);
+      const res = await axios.get(`https://nexus-smart-campus-backend.onrender.com/api/student-safety/reports?email=${encodeURIComponent(studentEmail)}`);
       if (res.data && res.data.reports) {
         setReportsList(res.data.reports);
       }
@@ -570,7 +570,7 @@ export const StudentSafetyAndVoice: React.FC<StudentSafetyAndVoiceProps> = ({ se
     };
 
     try {
-      const res = await axios.post('http://localhost:5000/api/student-safety/reports', payload);
+      const res = await axios.post('https://nexus-smart-campus-backend.onrender.com/api/student-safety/reports', payload);
       if (res.data && res.data.report) {
         setSuccessMsg(`🎉 SUCCESS! Report ID ${res.data.report.reportId} submitted to authorized faculties & admins.`);
       }
@@ -596,7 +596,7 @@ export const StudentSafetyAndVoice: React.FC<StudentSafetyAndVoiceProps> = ({ se
     }
 
     try {
-      await axios.post('http://localhost:5000/api/student-safety/feedback', {
+      await axios.post('https://nexus-smart-campus-backend.onrender.com/api/student-safety/feedback', {
         studentName,
         studentEmail,
         feedbackType: fbType,

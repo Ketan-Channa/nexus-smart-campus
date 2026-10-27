@@ -32,7 +32,7 @@ export const ParentStudentApprovals: React.FC<ParentStudentApprovalsProps> = ({
     setLoading(true);
     try {
       const res = await fetch(
-        `http://localhost:5000/api/parent/approvals?email=${encodeURIComponent(
+        `https://nexus-smart-campus-backend.onrender.com/api/parent/approvals?email=${encodeURIComponent(
           parentEmail
         )}&studentRoll=${encodeURIComponent(selectedChild.roll_number)}`
       );
@@ -57,7 +57,7 @@ export const ParentStudentApprovals: React.FC<ParentStudentApprovalsProps> = ({
 
     setSubmitting(true);
     try {
-      const res = await fetch('http://localhost:5000/api/parent/approvals/consent', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/parent/approvals/consent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

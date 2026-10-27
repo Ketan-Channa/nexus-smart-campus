@@ -89,7 +89,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ session, onLogout }) =
   const fetchOverview = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/admin/overview-stats');
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/overview-stats');
       const data = await res.json();
       if (data.status === 'success') {
         setOverviewData(data);

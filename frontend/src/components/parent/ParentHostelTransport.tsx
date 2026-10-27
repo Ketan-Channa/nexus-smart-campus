@@ -29,7 +29,7 @@ export const ParentHostelTransport: React.FC<ParentHostelTransportProps> = ({
     setLoading(true);
     try {
       const res = await fetch(
-        `http://localhost:5000/api/parent/services/hostel-transport?email=${encodeURIComponent(
+        `https://nexus-smart-campus-backend.onrender.com/api/parent/services/hostel-transport?email=${encodeURIComponent(
           parentEmail
         )}&studentRoll=${encodeURIComponent(selectedChild.roll_number)}`
       );

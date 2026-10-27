@@ -408,7 +408,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
         });
       }
 
-      await axios.post('http://localhost:5000/api/auth/register', payload);
+      await axios.post('https://nexus-smart-campus-backend.onrender.com/api/auth/register', payload);
       setSubmitted(true);
     } catch (err: any) {
       alert(err.response?.data?.message || 'Registration failed. Please check network/database server.');

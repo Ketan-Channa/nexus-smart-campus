@@ -111,7 +111,7 @@ export const FacultyTimetableSchedule: React.FC<FacultyTimetableScheduleProps> =
     setLoading(true);
     setErrorMsg(null);
     try {
-      const res = await axios.get('http://localhost:5000/api/academics/timetable');
+      const res = await axios.get('https://nexus-smart-campus-backend.onrender.com/api/academics/timetable');
       if (res.data && res.data.status === 'success' && Array.isArray(res.data.data) && res.data.data.length > 0) {
         setTimetable(res.data.data);
         if (res.data.meta) setMeta(res.data.meta);

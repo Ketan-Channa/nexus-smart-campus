@@ -25,7 +25,7 @@ export const AdminPaymentsFinance: React.FC = () => {
   const fetchPayments = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/admin/payments/overview');
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/payments/overview');
       const data = await res.json();
       if (data.status === 'success') {
         setPayments(data.payments || []);
@@ -46,7 +46,7 @@ export const AdminPaymentsFinance: React.FC = () => {
     e.preventDefault();
     if (!selectedTxn || !refundReason) return;
     try {
-      const res = await fetch('http://localhost:5000/api/admin/payments/refund', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/payments/refund', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

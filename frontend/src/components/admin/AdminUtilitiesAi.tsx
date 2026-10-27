@@ -22,7 +22,7 @@ export const AdminUtilitiesAi: React.FC = () => {
     if (!promptInput.trim()) return;
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/admin/utilities/ai', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/utilities/ai', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ taskType, contextPrompt: promptInput }),

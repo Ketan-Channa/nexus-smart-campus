@@ -35,7 +35,7 @@ export const AlumniDocumentsVault: React.FC<AlumniDocumentsVaultProps> = ({ sess
     if (!userEmail) return;
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/alumni/documents?alumniEmail=${encodeURIComponent(userEmail)}`);
+      const res = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/alumni/documents?alumniEmail=${encodeURIComponent(userEmail)}`);
       const data = await res.json();
       if (data.status === 'success') {
         setDocuments(data.documents || []);
@@ -50,7 +50,7 @@ export const AlumniDocumentsVault: React.FC<AlumniDocumentsVaultProps> = ({ sess
   const handleAddDocument = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/api/alumni/documents', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/alumni/documents', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -76,7 +76,7 @@ export const AlumniDocumentsVault: React.FC<AlumniDocumentsVaultProps> = ({ sess
 
   const handleDelete = async (id: number) => {
     try {
-      await fetch(`http://localhost:5000/api/alumni/documents/${id}`, { method: 'DELETE' });
+      await fetch(`https://nexus-smart-campus-backend.onrender.com/api/alumni/documents/${id}`, { method: 'DELETE' });
       fetchDocuments();
     } catch (e) {
       console.error(e);

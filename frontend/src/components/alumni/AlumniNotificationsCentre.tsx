@@ -36,7 +36,7 @@ export const AlumniNotificationsCentre: React.FC<AlumniNotificationsCentreProps>
     if (!userEmail) return;
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/connections/notifications?userEmail=${encodeURIComponent(userEmail)}`);
+      const res = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/connections/notifications?userEmail=${encodeURIComponent(userEmail)}`);
       const data = await res.json();
       if (data.status === 'success') {
         setNotifications(data.notifications || []);
@@ -50,7 +50,7 @@ export const AlumniNotificationsCentre: React.FC<AlumniNotificationsCentreProps>
 
   const handleMarkRead = async (notifId: string) => {
     try {
-      await fetch('http://localhost:5000/api/connections/notifications/mark-read', {
+      await fetch('https://nexus-smart-campus-backend.onrender.com/api/connections/notifications/mark-read', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ notifId }),

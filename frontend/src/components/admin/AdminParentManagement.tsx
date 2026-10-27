@@ -31,7 +31,7 @@ export const AdminParentManagement: React.FC = () => {
   const fetchParentGovernance = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/admin/parent-governance');
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/parent-governance');
       const json = await res.json();
       if (json.status === 'success') {
         setData(json);
@@ -49,7 +49,7 @@ export const AdminParentManagement: React.FC = () => {
 
   const handleUpdateStatus = async (linkId: string, status: 'Verified' | 'Rejected' | 'Revoked') => {
     try {
-      const res = await fetch('http://localhost:5000/api/admin/parent-relationship/status', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/parent-relationship/status', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

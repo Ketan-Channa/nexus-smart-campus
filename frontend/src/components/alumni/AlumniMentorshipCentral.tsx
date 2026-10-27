@@ -67,14 +67,14 @@ export const AlumniMentorshipCentral: React.FC<AlumniMentorshipCentralProps> = (
     setLoading(true);
     try {
       // 1. Fetch requests
-      const reqRes = await fetch(`http://localhost:5000/api/alumni/mentorship/requests?userEmail=${encodeURIComponent(userEmail)}`);
+      const reqRes = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/alumni/mentorship/requests?userEmail=${encodeURIComponent(userEmail)}`);
       const reqData = await reqRes.json();
       if (reqData.status === 'success') {
         setRequests(reqData.requests || []);
       }
 
       // 2. Fetch sessions
-      const sessRes = await fetch(`http://localhost:5000/api/alumni/mentorship/sessions?userEmail=${encodeURIComponent(userEmail)}`);
+      const sessRes = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/alumni/mentorship/sessions?userEmail=${encodeURIComponent(userEmail)}`);
       const sessData = await sessRes.json();
       if (sessData.status === 'success') {
         setSessions(sessData.sessions || []);
@@ -88,7 +88,7 @@ export const AlumniMentorshipCentral: React.FC<AlumniMentorshipCentralProps> = (
 
   const handleRespond = async (requestId: string, status: 'ACCEPTED' | 'DECLINED') => {
     try {
-      const res = await fetch('http://localhost:5000/api/alumni/mentorship/respond', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/alumni/mentorship/respond', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ requestId, status }),
@@ -109,7 +109,7 @@ export const AlumniMentorshipCentral: React.FC<AlumniMentorshipCentralProps> = (
     if (!schedulingReq) return;
 
     try {
-      const res = await fetch('http://localhost:5000/api/alumni/mentorship/sessions', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/alumni/mentorship/sessions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -140,7 +140,7 @@ export const AlumniMentorshipCentral: React.FC<AlumniMentorshipCentralProps> = (
 
   const handleUpdateSessionStatus = async (sessionId: string, newStatus: 'COMPLETED' | 'CANCELLED') => {
     try {
-      const res = await fetch(`http://localhost:5000/api/alumni/mentorship/sessions/${sessionId}/status`, {
+      const res = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/alumni/mentorship/sessions/${sessionId}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus }),

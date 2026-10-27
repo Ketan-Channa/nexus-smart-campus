@@ -8,7 +8,7 @@ export const FacultyLeaveApprover: React.FC = () => {
 
   const fetchLeaves = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/faculty/leaves');
+      const res = await axios.get('https://nexus-smart-campus-backend.onrender.com/api/faculty/leaves');
       if (res.data && res.data.leaves) {
         setLeavesList(res.data.leaves);
       } else {
@@ -25,7 +25,7 @@ export const FacultyLeaveApprover: React.FC = () => {
 
   const handleAction = async (id: string, newStatus: 'Approved' | 'Rejected') => {
     try {
-      await axios.post('http://localhost:5000/api/faculty/leaves/approve', {
+      await axios.post('https://nexus-smart-campus-backend.onrender.com/api/faculty/leaves/approve', {
         leaveId: id,
         status: newStatus,
         approverEmail: 'faculty@nexus.edu',

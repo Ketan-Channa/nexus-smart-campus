@@ -39,7 +39,7 @@ export const ParentProfileManager: React.FC<ParentProfileManagerProps> = ({
     if (!parentEmail) return;
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/parent/profile?email=${encodeURIComponent(parentEmail)}`);
+      const res = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/parent/profile?email=${encodeURIComponent(parentEmail)}`);
       const json = await res.json();
       if (json.success && json.profile) {
         setProfile(json.profile);
@@ -65,7 +65,7 @@ export const ParentProfileManager: React.FC<ParentProfileManagerProps> = ({
     setSaving(true);
     setSaveSuccess(false);
     try {
-      const res = await fetch('http://localhost:5000/api/parent/profile', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/parent/profile', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

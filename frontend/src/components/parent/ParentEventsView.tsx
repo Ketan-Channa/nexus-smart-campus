@@ -31,7 +31,7 @@ export const ParentEventsView: React.FC<ParentEventsViewProps> = ({
     setLoading(true);
     try {
       const res = await fetch(
-        `http://localhost:5000/api/parent/events?email=${encodeURIComponent(
+        `https://nexus-smart-campus-backend.onrender.com/api/parent/events?email=${encodeURIComponent(
           parentEmail
         )}&studentRoll=${encodeURIComponent(selectedChild?.roll_number || '')}`
       );
@@ -53,7 +53,7 @@ export const ParentEventsView: React.FC<ParentEventsViewProps> = ({
   const handleRsvp = async (invitationId: string, status: 'Accepted' | 'Declined' | 'Tentative') => {
     setUpdatingId(invitationId);
     try {
-      const res = await fetch(`http://localhost:5000/api/parent/events/${invitationId}/rsvp`, {
+      const res = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/parent/events/${invitationId}/rsvp`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ rsvpStatus: status }),

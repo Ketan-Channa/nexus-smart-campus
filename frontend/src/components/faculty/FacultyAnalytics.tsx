@@ -8,7 +8,7 @@ export const FacultyAnalytics: React.FC = () => {
   useEffect(() => {
     const fetchAnalytics = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/faculty/students?className=BTECH%20CSE%204A');
+        const res = await axios.get('https://nexus-smart-campus-backend.onrender.com/api/faculty/students?className=BTECH%20CSE%204A');
         if (res.data && res.data.students) {
           const atRisk = res.data.students.filter((s: any) => s.attendancePercent < 75);
           setAtRiskStudents(atRisk);

@@ -20,7 +20,7 @@ export const ParentAssignmentsView: React.FC<ParentAssignmentsViewProps> = ({
     setLoading(true);
     try {
       const res = await fetch(
-        `http://localhost:5000/api/parent/academics/assignments?email=${encodeURIComponent(
+        `https://nexus-smart-campus-backend.onrender.com/api/parent/academics/assignments?email=${encodeURIComponent(
           parentEmail
         )}&studentRoll=${encodeURIComponent(selectedChild.roll_number)}`
       );

@@ -34,7 +34,7 @@ export const AlumniContributionsManager: React.FC<AlumniContributionsManagerProp
     if (!userEmail) return;
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/alumni/contributions?alumniEmail=${encodeURIComponent(userEmail)}`);
+      const res = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/alumni/contributions?alumniEmail=${encodeURIComponent(userEmail)}`);
       const data = await res.json();
       if (data.status === 'success') {
         setContributions(data.contributions || []);
@@ -49,7 +49,7 @@ export const AlumniContributionsManager: React.FC<AlumniContributionsManagerProp
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/api/alumni/contributions', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/alumni/contributions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

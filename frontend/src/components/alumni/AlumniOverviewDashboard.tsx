@@ -57,14 +57,14 @@ export const AlumniOverviewDashboard: React.FC<AlumniOverviewDashboardProps> = (
     setLoading(true);
     try {
       // 1. Fetch Profile
-      const profRes = await fetch(`http://localhost:5000/api/alumni/profile/${encodeURIComponent(alumniEmail)}`);
+      const profRes = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/alumni/profile/${encodeURIComponent(alumniEmail)}`);
       const profData = await profRes.json();
       if (profData.status === 'success' && profData.alumni) {
         setProfileData(profData.alumni);
       }
 
       // 2. Fetch Connections & Requests
-      const connRes = await fetch(`http://localhost:5000/api/connections/requests?userEmail=${encodeURIComponent(alumniEmail)}`);
+      const connRes = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/connections/requests?userEmail=${encodeURIComponent(alumniEmail)}`);
       const connData = await connRes.json();
       if (connData.status === 'success') {
         setConnectionsCount((connData.friends || []).length);
@@ -72,7 +72,7 @@ export const AlumniOverviewDashboard: React.FC<AlumniOverviewDashboardProps> = (
       }
 
       // 3. Fetch Mentorship Requests
-      const mentorRes = await fetch(`http://localhost:5000/api/alumni/mentorship/requests?userEmail=${encodeURIComponent(alumniEmail)}`);
+      const mentorRes = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/alumni/mentorship/requests?userEmail=${encodeURIComponent(alumniEmail)}`);
       const mentorData = await mentorRes.json();
       if (mentorData.status === 'success') {
         const pending = (mentorData.requests || []).filter((r: any) => r.status === 'PENDING');
@@ -80,14 +80,14 @@ export const AlumniOverviewDashboard: React.FC<AlumniOverviewDashboardProps> = (
       }
 
       // 4. Fetch Jobs
-      const jobsRes = await fetch('http://localhost:5000/api/alumni/jobs');
+      const jobsRes = await fetch('https://nexus-smart-campus-backend.onrender.com/api/alumni/jobs');
       const jobsData = await jobsRes.json();
       if (jobsData.status === 'success') {
         setJobsCount((jobsData.jobs || []).length);
       }
 
       // 5. Fetch Referrals
-      const refRes = await fetch(`http://localhost:5000/api/alumni/referrals?userEmail=${encodeURIComponent(alumniEmail)}`);
+      const refRes = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/alumni/referrals?userEmail=${encodeURIComponent(alumniEmail)}`);
       const refData = await refRes.json();
       if (refData.status === 'success') {
         const pendingRef = (refData.referrals || []).filter((r: any) => r.status === 'PENDING');
@@ -95,7 +95,7 @@ export const AlumniOverviewDashboard: React.FC<AlumniOverviewDashboardProps> = (
       }
 
       // 6. Fetch Sessions
-      const sessRes = await fetch(`http://localhost:5000/api/alumni/mentorship/sessions?userEmail=${encodeURIComponent(alumniEmail)}`);
+      const sessRes = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/alumni/mentorship/sessions?userEmail=${encodeURIComponent(alumniEmail)}`);
       const sessData = await sessRes.json();
       if (sessData.status === 'success') {
         const scheduled = (sessData.sessions || []).filter((s: any) => s.status === 'SCHEDULED');
@@ -103,7 +103,7 @@ export const AlumniOverviewDashboard: React.FC<AlumniOverviewDashboardProps> = (
       }
 
       // 7. Fetch Events
-      const evRes = await fetch('http://localhost:5000/api/alumni/events');
+      const evRes = await fetch('https://nexus-smart-campus-backend.onrender.com/api/alumni/events');
       const evData = await evRes.json();
       if (evData.status === 'success') {
         setUpcomingEvents((evData.events || []).slice(0, 3));

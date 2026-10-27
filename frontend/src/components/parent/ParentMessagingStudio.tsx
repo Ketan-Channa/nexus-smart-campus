@@ -33,7 +33,7 @@ export const ParentMessagingStudio: React.FC<ParentMessagingStudioProps> = ({
     setLoading(true);
     try {
       const res = await fetch(
-        `http://localhost:5000/api/connections/messages?user1=${encodeURIComponent(
+        `https://nexus-smart-campus-backend.onrender.com/api/connections/messages?user1=${encodeURIComponent(
           parentEmail
         )}&user2=${encodeURIComponent(targetFacultyEmail)}`
       );
@@ -58,7 +58,7 @@ export const ParentMessagingStudio: React.FC<ParentMessagingStudioProps> = ({
 
     setSending(true);
     try {
-      const res = await fetch('http://localhost:5000/api/connections/messages/send', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/connections/messages/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

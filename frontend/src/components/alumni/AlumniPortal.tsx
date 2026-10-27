@@ -93,7 +93,7 @@ export const AlumniPortal: React.FC<AlumniPortalProps> = ({ session, onLogout })
     if (!alumniEmail) return;
     try {
       // 1. Verification status
-      const vRes = await fetch(`http://localhost:5000/api/alumni/verification-status/${encodeURIComponent(alumniEmail)}`);
+      const vRes = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/alumni/verification-status/${encodeURIComponent(alumniEmail)}`);
       const vData = await vRes.json();
       if (vData.status === 'success' && vData.verification) {
         setVerificationStatus(vData.verification.verification_status);
@@ -101,14 +101,14 @@ export const AlumniPortal: React.FC<AlumniPortalProps> = ({ session, onLogout })
       }
 
       // 2. Connections count
-      const cRes = await fetch(`http://localhost:5000/api/connections/requests?userEmail=${encodeURIComponent(alumniEmail)}`);
+      const cRes = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/connections/requests?userEmail=${encodeURIComponent(alumniEmail)}`);
       const cData = await cRes.json();
       if (cData.status === 'success') {
         setPendingRequestsCount((cData.incomingRequests || []).length);
       }
 
       // 3. Mentorship count
-      const mRes = await fetch(`http://localhost:5000/api/alumni/mentorship/requests?userEmail=${encodeURIComponent(alumniEmail)}`);
+      const mRes = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/alumni/mentorship/requests?userEmail=${encodeURIComponent(alumniEmail)}`);
       const mData = await mRes.json();
       if (mData.status === 'success') {
         const pending = (mData.requests || []).filter((r: any) => r.status === 'PENDING');
@@ -116,7 +116,7 @@ export const AlumniPortal: React.FC<AlumniPortalProps> = ({ session, onLogout })
       }
 
       // 4. Referrals count
-      const rRes = await fetch(`http://localhost:5000/api/alumni/referrals?userEmail=${encodeURIComponent(alumniEmail)}`);
+      const rRes = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/alumni/referrals?userEmail=${encodeURIComponent(alumniEmail)}`);
       const rData = await rRes.json();
       if (rData.status === 'success') {
         const pendingRef = (rData.referrals || []).filter((r: any) => r.status === 'PENDING');

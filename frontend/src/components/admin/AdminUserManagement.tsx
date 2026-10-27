@@ -49,7 +49,7 @@ export const AdminUserManagement: React.FC = () => {
       const q = new URLSearchParams();
       if (roleFilter !== 'All') q.append('role', roleFilter);
       if (searchTerm) q.append('search', searchTerm);
-      const res = await fetch(`http://localhost:5000/api/admin/users?${q.toString()}`);
+      const res = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/admin/users?${q.toString()}`);
       const data = await res.json();
       if (data.status === 'success') {
         setUsers(data.users || []);
@@ -73,7 +73,7 @@ export const AdminUserManagement: React.FC = () => {
   const handleCreateUser = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/api/admin/users', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(createForm),
@@ -104,7 +104,7 @@ export const AdminUserManagement: React.FC = () => {
   const handleToggleStatus = async (user: any) => {
     const newStatus = user.status === 'ACTIVE' || user.status === 'VERIFIED' ? 'INACTIVE' : 'ACTIVE';
     try {
-      const res = await fetch('http://localhost:5000/api/admin/users/status', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/users/status', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -129,7 +129,7 @@ export const AdminUserManagement: React.FC = () => {
     e.preventDefault();
     if (!selectedUser || !newPassword) return;
     try {
-      const res = await fetch('http://localhost:5000/api/admin/users/reset-password', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/users/reset-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

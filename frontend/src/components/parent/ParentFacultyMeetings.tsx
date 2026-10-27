@@ -52,7 +52,7 @@ export const ParentFacultyMeetings: React.FC<ParentFacultyMeetingsProps> = ({
     setLoading(true);
     try {
       const res = await fetch(
-        `http://localhost:5000/api/parent/meetings?email=${encodeURIComponent(
+        `https://nexus-smart-campus-backend.onrender.com/api/parent/meetings?email=${encodeURIComponent(
           parentEmail
         )}&studentRoll=${encodeURIComponent(selectedChild.roll_number)}`
       );
@@ -77,7 +77,7 @@ export const ParentFacultyMeetings: React.FC<ParentFacultyMeetingsProps> = ({
 
     setSubmitting(true);
     try {
-      const res = await fetch('http://localhost:5000/api/parent/meetings/request', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/parent/meetings/request', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -117,7 +117,7 @@ export const ParentFacultyMeetings: React.FC<ParentFacultyMeetingsProps> = ({
     setActionSubmitting(true);
     try {
       const res = await fetch(
-        `http://localhost:5000/api/parent/meetings/${showActionModal.meeting_id}/respond`,
+        `https://nexus-smart-campus-backend.onrender.com/api/parent/meetings/${showActionModal.meeting_id}/respond`,
         {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },

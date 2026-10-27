@@ -37,7 +37,7 @@ export const ParentConnectCentral: React.FC<ParentConnectCentralProps> = ({
     setLoading(true);
     try {
       // 1. Fetch authorized faculty directory for this class
-      const dRes = await fetch('http://localhost:5000/api/faculty/parent-connect/directory?targetClass=' + encodeURIComponent(selectedChild?.class || 'BTECH CSE 4A'));
+      const dRes = await fetch('https://nexus-smart-campus-backend.onrender.com/api/faculty/parent-connect/directory?targetClass=' + encodeURIComponent(selectedChild?.class || 'BTECH CSE 4A'));
       const dJson = await dRes.json();
       if (dJson.success) {
         setFacultyList(dJson.directory || []);
@@ -45,7 +45,7 @@ export const ParentConnectCentral: React.FC<ParentConnectCentralProps> = ({
 
       // 2. Fetch active meetings
       const mRes = await fetch(
-        `http://localhost:5000/api/parent/meetings?email=${encodeURIComponent(
+        `https://nexus-smart-campus-backend.onrender.com/api/parent/meetings?email=${encodeURIComponent(
           parentEmail
         )}&studentRoll=${encodeURIComponent(selectedChild?.roll_number || '')}`
       );

@@ -25,9 +25,9 @@ export const AdminAlumniCareerResearch: React.FC = () => {
     setLoading(true);
     try {
       const [jRes, lRes, rRes] = await Promise.all([
-        fetch('http://localhost:5000/api/admin/alumni/jobs'),
-        fetch('http://localhost:5000/api/admin/alumni/mentorship'),
-        fetch('http://localhost:5000/api/admin/research/projects'),
+        fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/alumni/jobs'),
+        fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/alumni/mentorship'),
+        fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/research/projects'),
       ]);
       const jData = await jRes.json();
       const lData = await lRes.json();
@@ -48,7 +48,7 @@ export const AdminAlumniCareerResearch: React.FC = () => {
 
   const handleModerateJob = async (jobId: string | number, status: 'APPROVED' | 'REJECTED') => {
     try {
-      const res = await fetch('http://localhost:5000/api/admin/alumni/jobs/moderate', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/alumni/jobs/moderate', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ jobId, status, adminEmail: 'admin@nexus.edu' }),
@@ -65,7 +65,7 @@ export const AdminAlumniCareerResearch: React.FC = () => {
 
   const handleUpdateLecture = async (lectureId: string | number, status: 'APPROVED' | 'REJECTED') => {
     try {
-      const res = await fetch('http://localhost:5000/api/admin/alumni/guest-lectures/status', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/alumni/guest-lectures/status', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ lectureId, status, adminEmail: 'admin@nexus.edu' }),

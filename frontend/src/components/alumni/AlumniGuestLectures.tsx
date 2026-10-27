@@ -50,7 +50,7 @@ export const AlumniGuestLectures: React.FC<AlumniGuestLecturesProps> = ({ sessio
   const fetchLectures = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/alumni/guest-lectures?alumniEmail=${encodeURIComponent(userEmail)}`);
+      const res = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/alumni/guest-lectures?alumniEmail=${encodeURIComponent(userEmail)}`);
       const data = await res.json();
       if (data.status === 'success') {
         setLectures(data.lectures || []);
@@ -65,7 +65,7 @@ export const AlumniGuestLectures: React.FC<AlumniGuestLecturesProps> = ({ sessio
   const handleProposeSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/api/alumni/guest-lectures', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/alumni/guest-lectures', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

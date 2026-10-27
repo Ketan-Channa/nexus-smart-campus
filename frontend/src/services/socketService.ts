@@ -1,6 +1,9 @@
+
 import { io, Socket } from 'socket.io-client';
 
-const SOCKET_URL = 'http://localhost:5000';
+const env = (import.meta as any).env;
+const SOCKET_URL: string =
+  env?.VITE_SOCKET_URL || 'https://nexus-smart-campus-backend.onrender.com';
 
 let socket: Socket | null = null;
 
@@ -9,7 +12,11 @@ export const initializeSocket = (userSession: any): Socket => {
     return socket;
   }
 
-  const token = localStorage.getItem('nexus_token') || sessionStorage.getItem('nexus_token') || '';
+  const token =
+    localStorage.getItem('nexus_token') ||
+    sessionStorage.getItem('nexus_token') ||
+    '';
+
   const user = userSession || null;
 
   socket = io(SOCKET_URL, {
@@ -29,23 +36,24 @@ export const initializeSocket = (userSession: any): Socket => {
   });
 
   socket.on('connect', () => {
-    console.log('⚡ [Socket.IO Client] Connected to NEXUS Realtime Engine:', socket?.id);
+    console.log(
+      '[Socket.IO Client] Connected to NEXUS Realtime Engine:',
+      socket?.id
+    );
   });
 
   socket.on('connect_error', (err) => {
-    console.warn('⚠️ [Socket.IO Client] Connection error:', err.message);
+    console.warn('[Socket.IO Client] Connection error:', err.message);
   });
 
   socket.on('disconnect', (reason) => {
-    console.log('🔌 [Socket.IO Client] Disconnected:', reason);
+    console.log('[Socket.IO Client] Disconnected:', reason);
   });
 
   return socket;
 };
 
-export const getSocket = (): Socket | null => {
-  return socket;
-};
+export const getSocket = (): Socket | null => socket;
 
 export const disconnectSocket = (): void => {
   if (socket) {

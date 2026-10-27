@@ -134,7 +134,7 @@ export const CaptainChatbot: React.FC<CaptainChatbotProps> = ({
     setIsTyping(true);
 
     try {
-      const response = await axios.post('http://localhost:5000/api/ai/chat', {
+      const response = await axios.post('https://nexus-smart-campus-backend.onrender.com/api/ai/chat', {
         prompt: query,
         userRole: role,
         userEmail,

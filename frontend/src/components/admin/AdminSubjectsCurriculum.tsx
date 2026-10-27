@@ -36,8 +36,8 @@ export const AdminSubjectsCurriculum: React.FC = () => {
     setLoading(true);
     try {
       const [sRes, fRes] = await Promise.all([
-        fetch('http://localhost:5000/api/admin/subjects'),
-        fetch('http://localhost:5000/api/admin/faculty'),
+        fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/subjects'),
+        fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/faculty'),
       ]);
       const sData = await sRes.json();
       const fData = await fRes.json();
@@ -57,7 +57,7 @@ export const AdminSubjectsCurriculum: React.FC = () => {
   const handleCreateSubject = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/api/admin/subjects', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/subjects', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(subjectForm),
@@ -78,7 +78,7 @@ export const AdminSubjectsCurriculum: React.FC = () => {
     e.preventDefault();
     if (!selectedSubject || !selectedFacultyId) return;
     try {
-      const res = await fetch('http://localhost:5000/api/admin/subjects/assign-faculty', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/subjects/assign-faculty', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

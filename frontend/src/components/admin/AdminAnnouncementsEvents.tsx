@@ -46,8 +46,8 @@ export const AdminAnnouncementsEvents: React.FC = () => {
     setLoading(true);
     try {
       const [aRes, eRes] = await Promise.all([
-        fetch('http://localhost:5000/api/admin/announcements'),
-        fetch('http://localhost:5000/api/admin/events'),
+        fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/announcements'),
+        fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/events'),
       ]);
       const aData = await aRes.json();
       const eData = await eRes.json();
@@ -67,7 +67,7 @@ export const AdminAnnouncementsEvents: React.FC = () => {
   const handleCreateAnnouncement = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/api/admin/announcements', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/announcements', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -91,7 +91,7 @@ export const AdminAnnouncementsEvents: React.FC = () => {
   const handleCreateEvent = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/api/admin/events', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/events', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -112,7 +112,7 @@ export const AdminAnnouncementsEvents: React.FC = () => {
 
   const handleDeleteAnnouncement = async (id: number) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/admin/announcements/${id}`, {
+      const res = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/admin/announcements/${id}`, {
         method: 'DELETE',
       });
       const data = await res.json();

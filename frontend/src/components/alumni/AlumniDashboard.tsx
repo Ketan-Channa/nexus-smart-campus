@@ -82,7 +82,7 @@ export const AlumniDashboard: React.FC<AlumniDashboardProps> = ({ user }) => {
   const fetchProfileData = async () => {
     if (!user?.email) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/alumni/profile/${encodeURIComponent(user.email)}`);
+      const res = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/alumni/profile/${encodeURIComponent(user.email)}`);
       const data = await res.json();
       if (data.status === 'success' && data.alumni) {
         const a = data.alumni;
@@ -122,7 +122,7 @@ export const AlumniDashboard: React.FC<AlumniDashboardProps> = ({ user }) => {
   const fetchMentorshipRequests = async () => {
     if (!user?.email) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/alumni/mentorship/requests?userEmail=${encodeURIComponent(user.email)}`);
+      const res = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/alumni/mentorship/requests?userEmail=${encodeURIComponent(user.email)}`);
       const data = await res.json();
       if (data.status === 'success') {
         setMentorshipRequests(data.requests || []);
@@ -134,7 +134,7 @@ export const AlumniDashboard: React.FC<AlumniDashboardProps> = ({ user }) => {
 
   const fetchMyJobs = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/alumni/jobs`);
+      const res = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/alumni/jobs`);
       const data = await res.json();
       if (data.status === 'success') {
         setJobs(data.jobs || []);
@@ -146,7 +146,7 @@ export const AlumniDashboard: React.FC<AlumniDashboardProps> = ({ user }) => {
 
   const fetchEvents = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/alumni/events`);
+      const res = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/alumni/events`);
       const data = await res.json();
       if (data.status === 'success') {
         setEvents(data.events || []);
@@ -159,7 +159,7 @@ export const AlumniDashboard: React.FC<AlumniDashboardProps> = ({ user }) => {
   const fetchCollaborations = async () => {
     if (!user?.email) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/alumni/collaborations?userEmail=${encodeURIComponent(user.email)}`);
+      const res = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/alumni/collaborations?userEmail=${encodeURIComponent(user.email)}`);
       const data = await res.json();
       if (data.status === 'success') {
         setCollaborations(data.collaborations || []);
@@ -173,7 +173,7 @@ export const AlumniDashboard: React.FC<AlumniDashboardProps> = ({ user }) => {
     setLoading(true);
     setStatusMessage(null);
     try {
-      const res = await fetch('http://localhost:5000/api/alumni/profile', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/alumni/profile', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -216,7 +216,7 @@ export const AlumniDashboard: React.FC<AlumniDashboardProps> = ({ user }) => {
 
   const handleRespondMentorship = async (requestId: string, status: 'ACCEPTED' | 'REJECTED') => {
     try {
-      const res = await fetch('http://localhost:5000/api/alumni/mentorship/respond', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/alumni/mentorship/respond', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ requestId, status }),
@@ -234,7 +234,7 @@ export const AlumniDashboard: React.FC<AlumniDashboardProps> = ({ user }) => {
     if (!newJob.jobTitle || !newJob.company || !newJob.description) return;
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/alumni/jobs', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/alumni/jobs', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -259,7 +259,7 @@ export const AlumniDashboard: React.FC<AlumniDashboardProps> = ({ user }) => {
   const handleRunAiAssistant = async () => {
     setAiLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/alumni/ai-assistant', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/alumni/ai-assistant', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

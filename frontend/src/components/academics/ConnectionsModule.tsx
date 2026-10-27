@@ -453,7 +453,7 @@ export const ConnectionsModule: React.FC<ConnectionsModuleProps> = ({ session })
     if (!currentUserEmail || !targetEmail) return;
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/connections/messages?user1=${encodeURIComponent(currentUserEmail)}&user2=${encodeURIComponent(targetEmail)}`
+        `https://nexus-smart-campus-backend.onrender.com/api/connections/messages?user1=${encodeURIComponent(currentUserEmail)}&user2=${encodeURIComponent(targetEmail)}`
       );
       if (res.data?.status === 'success' && Array.isArray(res.data.messages)) {
         setChatMessages(res.data.messages);
@@ -470,8 +470,8 @@ export const ConnectionsModule: React.FC<ConnectionsModuleProps> = ({ session })
 
       // 1. Fetch Registered Students & Faculty from DB
       const [stuRes, facRes] = await Promise.allSettled([
-        axios.get('http://localhost:5000/api/admin/users?role=Student'),
-        axios.get('http://localhost:5000/api/admin/faculty'),
+        axios.get('https://nexus-smart-campus-backend.onrender.com/api/admin/users?role=Student'),
+        axios.get('https://nexus-smart-campus-backend.onrender.com/api/admin/faculty'),
       ]);
 
       const dbUsers: AppNetworkUser[] = [];
@@ -531,7 +531,7 @@ export const ConnectionsModule: React.FC<ConnectionsModuleProps> = ({ session })
       setRegisteredNetworkUsers(dbUsers);
 
       // 2. Fetch Incoming Requests, Sent Pending Requests, and Connected Friends from DB
-      const reqRes = await axios.get(`http://localhost:5000/api/connections/requests?userEmail=${encodeURIComponent(myEmail)}`);
+      const reqRes = await axios.get(`https://nexus-smart-campus-backend.onrender.com/api/connections/requests?userEmail=${encodeURIComponent(myEmail)}`);
       if (reqRes.data?.status === 'success') {
         const { incomingRequests: rawIncoming, sentRequests: rawSent, friends: rawFriends } = reqRes.data;
 
@@ -589,7 +589,7 @@ export const ConnectionsModule: React.FC<ConnectionsModuleProps> = ({ session })
       }
 
       // 3. Fetch Feed Posts from DB
-      const postsRes = await axios.get('http://localhost:5000/api/connections/posts');
+      const postsRes = await axios.get('https://nexus-smart-campus-backend.onrender.com/api/connections/posts');
       if (postsRes.data?.status === 'success' && Array.isArray(postsRes.data.posts)) {
         const dbPosts = postsRes.data.posts.map((p: any) => ({
           id: p.id || p.postId,
@@ -607,7 +607,7 @@ export const ConnectionsModule: React.FC<ConnectionsModuleProps> = ({ session })
       }
 
       // 4. Fetch Account Notifications from DB
-      const notifRes = await axios.get(`http://localhost:5000/api/connections/notifications?userEmail=${encodeURIComponent(myEmail)}`);
+      const notifRes = await axios.get(`https://nexus-smart-campus-backend.onrender.com/api/connections/notifications?userEmail=${encodeURIComponent(myEmail)}`);
       if (notifRes.data?.status === 'success' && Array.isArray(notifRes.data.notifications)) {
         setNotificationsList(notifRes.data.notifications);
       }
@@ -658,7 +658,7 @@ export const ConnectionsModule: React.FC<ConnectionsModuleProps> = ({ session })
       const targetEmail = (user.email || '').toLowerCase().trim();
       setConnectionStatusMap((prev) => ({ ...prev, [targetEmail]: 'Pending' }));
 
-      await axios.post('http://localhost:5000/api/connections/friends/request', {
+      await axios.post('https://nexus-smart-campus-backend.onrender.com/api/connections/friends/request', {
         senderEmail: currentUserEmail,
         receiverEmail: targetEmail,
         message: `Hi ${user.name}! I would like to connect with you on NEXUS Campus Network.`,
@@ -699,7 +699,7 @@ export const ConnectionsModule: React.FC<ConnectionsModuleProps> = ({ session })
   const handleAcceptIncomingRequest = async (reqItem: any) => {
     try {
       const sEmail = (reqItem.senderEmail || reqItem.sender_email || '').toLowerCase().trim();
-      await axios.post('http://localhost:5000/api/connections/requests/respond', {
+      await axios.post('https://nexus-smart-campus-backend.onrender.com/api/connections/requests/respond', {
         requestId: reqItem.requestId,
         userEmail: currentUserEmail,
         senderEmail: sEmail,
@@ -729,7 +729,7 @@ export const ConnectionsModule: React.FC<ConnectionsModuleProps> = ({ session })
   const handleDeclineIncomingRequest = async (reqItem: any) => {
     try {
       const sEmail = (reqItem.senderEmail || reqItem.sender_email || '').toLowerCase().trim();
-      await axios.post('http://localhost:5000/api/connections/requests/respond', {
+      await axios.post('https://nexus-smart-campus-backend.onrender.com/api/connections/requests/respond', {
         requestId: reqItem.requestId,
         userEmail: currentUserEmail,
         senderEmail: sEmail,
@@ -753,7 +753,7 @@ export const ConnectionsModule: React.FC<ConnectionsModuleProps> = ({ session })
   const handleCancelPendingRequest = async (user: AppNetworkUser) => {
     try {
       const targetEmail = (user.email || '').toLowerCase().trim();
-      await axios.post('http://localhost:5000/api/connections/requests/cancel', {
+      await axios.post('https://nexus-smart-campus-backend.onrender.com/api/connections/requests/cancel', {
         userEmail: currentUserEmail,
         targetEmail: targetEmail,
       });
@@ -918,7 +918,7 @@ export const ConnectionsModule: React.FC<ConnectionsModuleProps> = ({ session })
     setChatInputText('');
 
     try {
-      await axios.post('http://localhost:5000/api/connections/messages', {
+      await axios.post('https://nexus-smart-campus-backend.onrender.com/api/connections/messages', {
         senderEmail: currentUserEmail,
         receiverEmail: targetEmail,
         content: text,
@@ -938,7 +938,7 @@ export const ConnectionsModule: React.FC<ConnectionsModuleProps> = ({ session })
         const mediaUrl = ev.target?.result as string;
         const isImg = file.type.startsWith('image/');
         try {
-          await axios.post('http://localhost:5000/api/connections/messages', {
+          await axios.post('https://nexus-smart-campus-backend.onrender.com/api/connections/messages', {
             senderEmail: currentUserEmail,
             receiverEmail: targetEmail,
             content: file.name,
@@ -959,7 +959,7 @@ export const ConnectionsModule: React.FC<ConnectionsModuleProps> = ({ session })
     const targetEmail = (activeChatUser.email || '').toLowerCase().trim();
     setIsPickerOpen(false);
     try {
-      await axios.post('http://localhost:5000/api/connections/messages', {
+      await axios.post('https://nexus-smart-campus-backend.onrender.com/api/connections/messages', {
         senderEmail: currentUserEmail,
         receiverEmail: targetEmail,
         content: gifObj.title,
@@ -977,7 +977,7 @@ export const ConnectionsModule: React.FC<ConnectionsModuleProps> = ({ session })
     const targetEmail = (activeChatUser.email || '').toLowerCase().trim();
     setIsPickerOpen(false);
     try {
-      await axios.post('http://localhost:5000/api/connections/messages', {
+      await axios.post('https://nexus-smart-campus-backend.onrender.com/api/connections/messages', {
         senderEmail: currentUserEmail,
         receiverEmail: targetEmail,
         content: `${st.emoji} ${st.title}`,
@@ -995,7 +995,7 @@ export const ConnectionsModule: React.FC<ConnectionsModuleProps> = ({ session })
       const targetEmail = (activeChatUser.email || '').toLowerCase().trim();
       const secsStr = `0:${recordingSeconds.toString().padStart(2, '0')}`;
       try {
-        await axios.post('http://localhost:5000/api/connections/messages', {
+        await axios.post('https://nexus-smart-campus-backend.onrender.com/api/connections/messages', {
           senderEmail: currentUserEmail,
           receiverEmail: targetEmail,
           content: `Voice Note (${secsStr})`,
@@ -1644,7 +1644,7 @@ export const ConnectionsModule: React.FC<ConnectionsModuleProps> = ({ session })
                 onClick={async () => {
                   setNotificationsList(notificationsList.map((n) => ({ ...n, isRead: true })));
                   try {
-                    await axios.post('http://localhost:5000/api/connections/notifications/mark-read', {
+                    await axios.post('https://nexus-smart-campus-backend.onrender.com/api/connections/notifications/mark-read', {
                       userEmail: currentUserEmail,
                     });
                   } catch (e) {}
@@ -1663,7 +1663,7 @@ export const ConnectionsModule: React.FC<ConnectionsModuleProps> = ({ session })
                     setNotificationsList(notificationsList.map((n) => (n.id === notif.id ? { ...n, isRead: true } : n)));
                     setSelectedNotificationModal(notif);
                     try {
-                      await axios.post('http://localhost:5000/api/connections/notifications/mark-read', {
+                      await axios.post('https://nexus-smart-campus-backend.onrender.com/api/connections/notifications/mark-read', {
                         notifId: notif.id,
                       });
                     } catch (e) {}

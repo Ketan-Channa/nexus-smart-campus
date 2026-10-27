@@ -44,8 +44,8 @@ export const AdminCampusServices: React.FC = () => {
     setLoading(true);
     try {
       const [cRes, sRes] = await Promise.all([
-        fetch('http://localhost:5000/api/admin/canteen/overview'),
-        fetch('http://localhost:5000/api/admin/services/hostel-transport'),
+        fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/canteen/overview'),
+        fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/services/hostel-transport'),
       ]);
       const cData = await cRes.json();
       const sData = await sRes.json();
@@ -65,7 +65,7 @@ export const AdminCampusServices: React.FC = () => {
   const handleSaveItem = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/api/admin/canteen/items', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/canteen/items', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

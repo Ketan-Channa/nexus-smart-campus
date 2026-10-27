@@ -93,7 +93,7 @@ export const AlumniMessagingStudio: React.FC<AlumniMessagingStudioProps> = ({
   const fetchContacts = async () => {
     if (!currentEmail) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/connections/requests?userEmail=${encodeURIComponent(currentEmail)}`);
+      const res = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/connections/requests?userEmail=${encodeURIComponent(currentEmail)}`);
       const data = await res.json();
       if (data.status === 'success') {
         const friendList = (data.friends || []).map((f: any) => ({
@@ -119,7 +119,7 @@ export const AlumniMessagingStudio: React.FC<AlumniMessagingStudioProps> = ({
     setLoadingMessages(true);
     try {
       const res = await fetch(
-        `http://localhost:5000/api/connections/messages?user1=${encodeURIComponent(currentEmail)}&user2=${encodeURIComponent(targetEmail)}`
+        `https://nexus-smart-campus-backend.onrender.com/api/connections/messages?user1=${encodeURIComponent(currentEmail)}&user2=${encodeURIComponent(targetEmail)}`
       );
       const data = await res.json();
       if (data.status === 'success') {
@@ -150,7 +150,7 @@ export const AlumniMessagingStudio: React.FC<AlumniMessagingStudioProps> = ({
     setMessages((prev) => [...prev, optimisticMessage]);
 
     try {
-      await fetch('http://localhost:5000/api/connections/messages', {
+      await fetch('https://nexus-smart-campus-backend.onrender.com/api/connections/messages', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

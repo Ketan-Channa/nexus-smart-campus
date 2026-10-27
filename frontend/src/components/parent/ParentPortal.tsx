@@ -82,7 +82,7 @@ export const ParentPortal: React.FC<ParentPortalProps> = ({ session, onLogout })
   const fetchChildren = useCallback(async () => {
     setLoadingChildren(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/parent/children?email=${encodeURIComponent(parentEmail)}`);
+      const res = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/parent/children?email=${encodeURIComponent(parentEmail)}`);
       const json = await res.json();
       if (json.success && Array.isArray(json.children)) {
         setChildrenList(json.children);
@@ -107,17 +107,17 @@ export const ParentPortal: React.FC<ParentPortalProps> = ({ session, onLogout })
     try {
       const [apprRes, meetRes, payRes] = await Promise.all([
         fetch(
-          `http://localhost:5000/api/parent/approvals?email=${encodeURIComponent(
+          `https://nexus-smart-campus-backend.onrender.com/api/parent/approvals?email=${encodeURIComponent(
             parentEmail
           )}&studentRoll=${encodeURIComponent(selectedChild.roll_number)}`
         ),
         fetch(
-          `http://localhost:5000/api/parent/meetings?email=${encodeURIComponent(
+          `https://nexus-smart-campus-backend.onrender.com/api/parent/meetings?email=${encodeURIComponent(
             parentEmail
           )}&studentRoll=${encodeURIComponent(selectedChild.roll_number)}`
         ),
         fetch(
-          `http://localhost:5000/api/parent/payments?email=${encodeURIComponent(
+          `https://nexus-smart-campus-backend.onrender.com/api/parent/payments?email=${encodeURIComponent(
             parentEmail
           )}&studentRoll=${encodeURIComponent(selectedChild.roll_number)}`
         ),

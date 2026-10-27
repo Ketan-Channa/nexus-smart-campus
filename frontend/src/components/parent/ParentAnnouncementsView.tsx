@@ -14,7 +14,7 @@ export const ParentAnnouncementsView: React.FC<ParentAnnouncementsViewProps> = (
   const fetchAnnouncements = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/faculty/announcements?role=Parent');
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/faculty/announcements?role=Parent');
       const json = await res.json();
       if (json.success) {
         setAnnouncements(json.announcements || []);

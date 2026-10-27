@@ -220,7 +220,7 @@ export const CampusHub: React.FC<CampusHubProps> = ({ onShowSplash, session }) =
   const handleSaveProfile = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.put('http://localhost:5000/api/auth/update-profile', {
+      await axios.put('https://nexus-smart-campus-backend.onrender.com/api/auth/update-profile', {
         role,
         identifier: userName || userEmail,
         fullName: userName,

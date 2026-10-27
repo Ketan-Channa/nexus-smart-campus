@@ -30,8 +30,8 @@ export const AlumniMeetingsScheduler: React.FC<AlumniMeetingsSchedulerProps> = (
     setLoading(true);
     try {
       const [sessRes, lecRes] = await Promise.all([
-        fetch(`http://localhost:5000/api/alumni/mentorship/sessions?userEmail=${encodeURIComponent(userEmail)}`),
-        fetch(`http://localhost:5000/api/alumni/guest-lectures?alumniEmail=${encodeURIComponent(userEmail)}`),
+        fetch(`https://nexus-smart-campus-backend.onrender.com/api/alumni/mentorship/sessions?userEmail=${encodeURIComponent(userEmail)}`),
+        fetch(`https://nexus-smart-campus-backend.onrender.com/api/alumni/guest-lectures?alumniEmail=${encodeURIComponent(userEmail)}`),
       ]);
 
       const sessData = await sessRes.json();

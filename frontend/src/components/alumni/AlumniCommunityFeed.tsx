@@ -35,7 +35,7 @@ export const AlumniCommunityFeed: React.FC<AlumniCommunityFeedProps> = ({ sessio
   const fetchPosts = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/connections/posts');
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/connections/posts');
       const data = await res.json();
       if (data.status === 'success') {
         setPosts(data.posts || []);
@@ -53,7 +53,7 @@ export const AlumniCommunityFeed: React.FC<AlumniCommunityFeedProps> = ({ sessio
 
     setPublishing(true);
     try {
-      const res = await fetch('http://localhost:5000/api/connections/posts', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/connections/posts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

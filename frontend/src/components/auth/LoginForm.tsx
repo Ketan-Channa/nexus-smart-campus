@@ -44,7 +44,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
     setError(null);
 
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
+      const response = await axios.post('https://nexus-smart-campus-backend.onrender.com/api/auth/login', {
         role,
         ...formData,
       });

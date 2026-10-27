@@ -80,12 +80,12 @@ export const AssignmentsAndWork: React.FC<AssignmentsAndWorkProps> = ({
     try {
       // 1. Fetch published assignments from backend
       try {
-        const asgnRes = await axios.get(`http://localhost:5000/api/faculty/assignments?className=${encodeURIComponent(className)}`);
+        const asgnRes = await axios.get(`https://nexus-smart-campus-backend.onrender.com/api/faculty/assignments?className=${encodeURIComponent(className)}`);
         if (asgnRes.data && asgnRes.data.success && Array.isArray(asgnRes.data.assignments) && asgnRes.data.assignments.length > 0) {
           rawAsgns = asgnRes.data.assignments;
         } else {
           // Fallback to fetch all published assignments
-          const allAsgnRes = await axios.get(`http://localhost:5000/api/faculty/assignments`);
+          const allAsgnRes = await axios.get(`https://nexus-smart-campus-backend.onrender.com/api/faculty/assignments`);
           if (allAsgnRes.data && allAsgnRes.data.success && Array.isArray(allAsgnRes.data.assignments)) {
             rawAsgns = allAsgnRes.data.assignments;
           }
@@ -94,13 +94,13 @@ export const AssignmentsAndWork: React.FC<AssignmentsAndWorkProps> = ({
         if (aErr.response) {
           setErrorMessage(`API Error (${aErr.response.status}): ${aErr.response.data?.message || 'Unable to load assignments from server.'}`);
         } else if (aErr.request) {
-          setErrorMessage('Network Error: Unable to reach server on http://localhost:5000. Please verify backend service.');
+          setErrorMessage('Network Error: Unable to reach server on https://nexus-smart-campus-backend.onrender.com. Please verify backend service.');
         } else {
           setErrorMessage(`Failed to load assignments: ${aErr.message}`);
         }
 
         try {
-          const allAsgnRes = await axios.get(`http://localhost:5000/api/faculty/assignments`);
+          const allAsgnRes = await axios.get(`https://nexus-smart-campus-backend.onrender.com/api/faculty/assignments`);
           if (allAsgnRes.data && allAsgnRes.data.success && Array.isArray(allAsgnRes.data.assignments)) {
             rawAsgns = allAsgnRes.data.assignments;
             setErrorMessage(null); // Cleared if fallback succeeds
@@ -110,7 +110,7 @@ export const AssignmentsAndWork: React.FC<AssignmentsAndWorkProps> = ({
 
       // 2. Fetch student submissions
       try {
-        const subRes = await axios.get(`http://localhost:5000/api/faculty/submissions?className=${encodeURIComponent(className)}`);
+        const subRes = await axios.get(`https://nexus-smart-campus-backend.onrender.com/api/faculty/submissions?className=${encodeURIComponent(className)}`);
         if (subRes.data && subRes.data.success && Array.isArray(subRes.data.submissions)) {
           rawSubs = subRes.data.submissions;
         }
@@ -207,7 +207,7 @@ export const AssignmentsAndWork: React.FC<AssignmentsAndWorkProps> = ({
 
       // Submit/Upsert submission record in MySQL
       const submissionId = `sub_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`;
-      await axios.post('http://localhost:5000/api/faculty/submissions/create', {
+      await axios.post('https://nexus-smart-campus-backend.onrender.com/api/faculty/submissions/create', {
         submissionId,
         assignmentId: activeUploadModal.id,
         studentEmail,
@@ -222,7 +222,7 @@ export const AssignmentsAndWork: React.FC<AssignmentsAndWorkProps> = ({
         status: uploadStatus,
       }).catch(async () => {
         // Direct fallback post if custom route not present
-        await axios.put('http://localhost:5000/api/faculty/submissions/grade', {
+        await axios.put('https://nexus-smart-campus-backend.onrender.com/api/faculty/submissions/grade', {
           submissionId,
           scoredMarks: null,
         }).catch(() => {});

@@ -27,7 +27,7 @@ export const AdminCentralApprovals: React.FC = () => {
   const fetchApprovals = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/admin/approvals/central');
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/approvals/central');
       const data = await res.json();
       if (data.status === 'success') {
         setApprovals(data.approvals || []);
@@ -47,7 +47,7 @@ export const AdminCentralApprovals: React.FC = () => {
     e.preventDefault();
     if (!selectedApproval) return;
     try {
-      const res = await fetch('http://localhost:5000/api/admin/approvals/central/process', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/approvals/central/process', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

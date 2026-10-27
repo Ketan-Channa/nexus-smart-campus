@@ -186,7 +186,7 @@ export const AssignmentsSquareCard: React.FC<AssignmentsSquareCardProps> = ({
   useEffect(() => {
     const fetchRealCardAssignments = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/faculty/assignments');
+        const res = await axios.get('https://nexus-smart-campus-backend.onrender.com/api/faculty/assignments');
         if (res.data && res.data.success && Array.isArray(res.data.assignments) && res.data.assignments.length > 0) {
           const formatted: AssignmentItem[] = res.data.assignments.map((a: any) => ({
             id: a.assignmentId || a.assignment_id || `asgn_${a.id}`,

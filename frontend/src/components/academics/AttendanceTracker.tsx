@@ -157,7 +157,7 @@ export const AttendanceTracker: React.FC<AttendanceTrackerProps> = ({ session: _
   const fetchAttendanceForClass = async (classNameStr: string, rollNo?: string) => {
     try {
       const activeRoll = rollNo !== undefined ? rollNo : currentRollNumber;
-      let url = `http://localhost:5000/api/attendance?className=${encodeURIComponent(classNameStr)}`;
+      let url = `https://nexus-smart-campus-backend.onrender.com/api/attendance?className=${encodeURIComponent(classNameStr)}`;
       if (activeRoll) {
         url += `&rollNumber=${encodeURIComponent(activeRoll)}`;
       }
@@ -175,7 +175,7 @@ export const AttendanceTracker: React.FC<AttendanceTrackerProps> = ({ session: _
   const handleMarkSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/attendance/mark', markForm);
+      await axios.post('https://nexus-smart-campus-backend.onrender.com/api/attendance/mark', markForm);
       setShowMarkModal(false);
       fetchAttendanceForClass(userClass);
     } catch (err) {

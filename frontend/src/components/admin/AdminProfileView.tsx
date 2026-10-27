@@ -31,7 +31,7 @@ export const AdminProfileView: React.FC<AdminProfileViewProps> = ({ session }) =
   const fetchProfile = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/admin/profile?email=${encodeURIComponent(adminEmail)}`);
+      const res = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/admin/profile?email=${encodeURIComponent(adminEmail)}`);
       const data = await res.json();
       if (data.status === 'success' && data.admin) {
         setProfile(data.admin);
@@ -50,7 +50,7 @@ export const AdminProfileView: React.FC<AdminProfileViewProps> = ({ session }) =
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/api/admin/profile', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/profile', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

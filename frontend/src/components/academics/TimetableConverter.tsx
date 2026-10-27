@@ -854,7 +854,7 @@ export const TimetableConverter: React.FC = () => {
           localStorage.setItem('nexus_user_timetable_meta', JSON.stringify(newMeta));
 
           try {
-            await axios.post('http://localhost:5000/api/academics/upload-timetable', {
+            await axios.post('https://nexus-smart-campus-backend.onrender.com/api/academics/upload-timetable', {
               fileName: file.name,
               selectedClass: initialClass,
               entries: uploadedData,
@@ -912,7 +912,7 @@ export const TimetableConverter: React.FC = () => {
         localStorage.setItem('nexus_user_timetable_meta', JSON.stringify(newMeta));
 
         try {
-          await axios.post('http://localhost:5000/api/academics/upload-timetable', {
+          await axios.post('https://nexus-smart-campus-backend.onrender.com/api/academics/upload-timetable', {
             fileName: file.name,
             selectedClass: initialClass,
             entries: uploadedData,
@@ -962,7 +962,7 @@ export const TimetableConverter: React.FC = () => {
     setDeleteConfirmModal(false);
 
     try {
-      await axios.delete('http://localhost:5000/api/academics/timetable', {
+      await axios.delete('https://nexus-smart-campus-backend.onrender.com/api/academics/timetable', {
         data: { userRole: currentUserRole },
       });
     } catch (err) {

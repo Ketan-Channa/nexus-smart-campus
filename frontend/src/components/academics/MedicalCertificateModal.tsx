@@ -145,7 +145,7 @@ export const MedicalCertificateModal: React.FC<MedicalCertificateModalProps> = (
 
     // 1. Send API Request to Backend
     try {
-      await axios.post('http://localhost:5000/api/attendance/medical/submit', certPayload);
+      await axios.post('https://nexus-smart-campus-backend.onrender.com/api/attendance/medical/submit', certPayload);
     } catch (err) {
       console.warn('Persisting medical certificate locally.');
     }

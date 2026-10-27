@@ -38,7 +38,7 @@ export const FacultyMyClasses: React.FC<FacultyMyClassesProps> = ({
   const fetchStudents = useCallback(async () => {
     if (!selectedClass) return;
     try {
-      const res = await axios.get(`http://localhost:5000/api/faculty/students?className=${encodeURIComponent(selectedClass)}`);
+      const res = await axios.get(`https://nexus-smart-campus-backend.onrender.com/api/faculty/students?className=${encodeURIComponent(selectedClass)}`);
       if (res.data && res.data.students) {
         setStudentsRoster(res.data.students);
       } else {
@@ -75,7 +75,7 @@ export const FacultyMyClasses: React.FC<FacultyMyClassesProps> = ({
     if (!transferModalStudent || !targetClassForTransfer) return;
     setIsSubmittingTransfer(true);
     try {
-      await axios.post('http://localhost:5000/api/faculty/students/transfer', {
+      await axios.post('https://nexus-smart-campus-backend.onrender.com/api/faculty/students/transfer', {
         studentId: transferModalStudent.id,
         rollNumber: transferModalStudent.rollNumber,
         oldClassName: selectedClass,
@@ -95,7 +95,7 @@ export const FacultyMyClasses: React.FC<FacultyMyClassesProps> = ({
   const handleDeactivateStudent = async (student: any) => {
     if (!window.confirm(`Deactivate ${student.name} (${student.rollNumber})?`)) return;
     try {
-      await axios.post('http://localhost:5000/api/faculty/students/deactivate', {
+      await axios.post('https://nexus-smart-campus-backend.onrender.com/api/faculty/students/deactivate', {
         studentId: student.id,
         rollNumber: student.rollNumber,
       });

@@ -32,7 +32,7 @@ export const AdminAlumniManagement: React.FC = () => {
   const fetchAdminAlumniData = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/alumni/admin/list');
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/alumni/admin/list');
       const data = await res.json();
       if (data.status === 'success') {
         setAlumniData({
@@ -53,7 +53,7 @@ export const AdminAlumniManagement: React.FC = () => {
 
   const handleUpdateStatus = async (id: number, email: string, status: 'VERIFIED' | 'REJECTED' | 'SUSPENDED' | 'PENDING') => {
     try {
-      const res = await fetch('http://localhost:5000/api/alumni/admin/verify', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/alumni/admin/verify', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id, email, status }),

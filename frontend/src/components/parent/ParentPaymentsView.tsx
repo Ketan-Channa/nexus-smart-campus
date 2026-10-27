@@ -30,7 +30,7 @@ export const ParentPaymentsView: React.FC<ParentPaymentsViewProps> = ({
     setLoading(true);
     try {
       const res = await fetch(
-        `http://localhost:5000/api/parent/finance/payments?email=${encodeURIComponent(
+        `https://nexus-smart-campus-backend.onrender.com/api/parent/finance/payments?email=${encodeURIComponent(
           parentEmail
         )}&studentRoll=${encodeURIComponent(selectedChild.roll_number)}`
       );
@@ -52,7 +52,7 @@ export const ParentPaymentsView: React.FC<ParentPaymentsViewProps> = ({
   const handlePay = async (feeItem: any) => {
     setPayingFeeId(feeItem.id);
     try {
-      const res = await fetch('http://localhost:5000/api/parent/finance/pay', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/parent/finance/pay', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

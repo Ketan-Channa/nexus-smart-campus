@@ -558,7 +558,7 @@ export const StudentUtilities: React.FC<StudentUtilitiesProps> = ({ session }) =
     setAssistantInput('');
 
     try {
-      const res = await axios.post('http://localhost:5000/api/student-utilities/ai/assistant', {
+      const res = await axios.post('https://nexus-smart-campus-backend.onrender.com/api/student-utilities/ai/assistant', {
         prompt: currPrompt,
         taskType: 'general',
       });
@@ -588,7 +588,7 @@ export const StudentUtilities: React.FC<StudentUtilitiesProps> = ({ session }) =
 
   const handleGenerateEmailDraft = async () => {
     try {
-      const res = await axios.post('http://localhost:5000/api/student-utilities/ai/assistant', {
+      const res = await axios.post('https://nexus-smart-campus-backend.onrender.com/api/student-utilities/ai/assistant', {
         taskType: 'email_draft',
         recipient: emailRecipient,
         purpose: emailPurpose,
@@ -641,7 +641,7 @@ export const StudentUtilities: React.FC<StudentUtilitiesProps> = ({ session }) =
     }
 
     try {
-      const res = await axios.post('http://localhost:5000/api/student-utilities/ai/organize-note', {
+      const res = await axios.post('https://nexus-smart-campus-backend.onrender.com/api/student-utilities/ai/organize-note', {
         rawText: noteContentInput,
       });
       if (res.data && res.data.organizedText) {
@@ -660,7 +660,7 @@ export const StudentUtilities: React.FC<StudentUtilitiesProps> = ({ session }) =
     const durMins = testType === 'Objective' ? 30 : 120;
 
     try {
-      const res = await axios.post('http://localhost:5000/api/student-utilities/tests/generate', {
+      const res = await axios.post('https://nexus-smart-campus-backend.onrender.com/api/student-utilities/tests/generate', {
         studentEmail,
         title: `${materialFileName.split('.')[0]} Self Test`,
         sourceMaterialName: materialFileName,
@@ -709,7 +709,7 @@ export const StudentUtilities: React.FC<StudentUtilitiesProps> = ({ session }) =
     if (!activeTest) return;
 
     try {
-      const res = await axios.post(`http://localhost:5000/api/student-utilities/tests/${activeTest.testId}/start`, {
+      const res = await axios.post(`https://nexus-smart-campus-backend.onrender.com/api/student-utilities/tests/${activeTest.testId}/start`, {
         studentEmail,
         durationMinutes: activeTest.durationMinutes,
       });
@@ -732,7 +732,7 @@ export const StudentUtilities: React.FC<StudentUtilitiesProps> = ({ session }) =
     setIsTestSubmitted(true);
 
     try {
-      const res = await axios.post(`http://localhost:5000/api/student-utilities/tests/${attemptId || 'ATT-001'}/submit`, {
+      const res = await axios.post(`https://nexus-smart-campus-backend.onrender.com/api/student-utilities/tests/${attemptId || 'ATT-001'}/submit`, {
         testId: activeTest?.testId,
         studentEmail,
         answers: selectedAnswers,

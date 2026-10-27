@@ -103,7 +103,7 @@ export const FacultyMyStudentsAndClasses: React.FC<FacultyMyStudentsAndClassesPr
     if (activeStudentModal) {
       setDrawerLoading(true);
       axios
-        .get(`http://localhost:5000/api/faculty/students/${activeStudentModal.id || activeStudentModal.rollNumber}`)
+        .get(`https://nexus-smart-campus-backend.onrender.com/api/faculty/students/${activeStudentModal.id || activeStudentModal.rollNumber}`)
         .then((res) => {
           if (res.data && res.data.success) {
             setDrawerData(res.data.student);
@@ -118,7 +118,7 @@ export const FacultyMyStudentsAndClasses: React.FC<FacultyMyStudentsAndClassesPr
     if (!newRemark || !activeStudentModal) return;
     setIsSubmittingRemark(true);
     try {
-      await axios.post(`http://localhost:5000/api/faculty/students/${activeStudentModal.id}/remarks`, {
+      await axios.post(`https://nexus-smart-campus-backend.onrender.com/api/faculty/students/${activeStudentModal.id}/remarks`, {
         remark: newRemark,
         category: newRemarkCategory,
         facultyEmail,
@@ -126,7 +126,7 @@ export const FacultyMyStudentsAndClasses: React.FC<FacultyMyStudentsAndClassesPr
       });
       alert('✓ Performance remark logged successfully!');
       setNewRemark('');
-      const res = await axios.get(`http://localhost:5000/api/faculty/students/${activeStudentModal.id}`);
+      const res = await axios.get(`https://nexus-smart-campus-backend.onrender.com/api/faculty/students/${activeStudentModal.id}`);
       if (res.data && res.data.success) setDrawerData(res.data.student);
     } catch (err: any) {
       alert(err.response?.data?.message || 'Failed to add remark');
@@ -139,7 +139,7 @@ export const FacultyMyStudentsAndClasses: React.FC<FacultyMyStudentsAndClassesPr
     if (!directMsgBody || !activeStudentModal) return;
     setIsSendingDirectMsg(true);
     try {
-      await axios.post(`http://localhost:5000/api/faculty/students/${activeStudentModal.id}/message`, {
+      await axios.post(`https://nexus-smart-campus-backend.onrender.com/api/faculty/students/${activeStudentModal.id}/message`, {
         message: directMsgBody,
         category: directMsgType,
         priority: 'NORMAL',
@@ -149,7 +149,7 @@ export const FacultyMyStudentsAndClasses: React.FC<FacultyMyStudentsAndClassesPr
       alert(`✓ ${directMsgType} dispatched directly to ${activeStudentModal.name}'s portal!`);
       setDirectMsgBody('');
       setDirectMsgTitle('');
-      const res = await axios.get(`http://localhost:5000/api/faculty/students/${activeStudentModal.id}`);
+      const res = await axios.get(`https://nexus-smart-campus-backend.onrender.com/api/faculty/students/${activeStudentModal.id}`);
       if (res.data && res.data.success) setDrawerData(res.data.student);
     } catch (err: any) {
       alert(err.response?.data?.message || 'Failed to send message');
@@ -172,7 +172,7 @@ export const FacultyMyStudentsAndClasses: React.FC<FacultyMyStudentsAndClassesPr
 
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/faculty/my-students-classes/my-class?email=${encodeURIComponent(facultyEmail)}&className=${encodeURIComponent(cls)}`
+          `https://nexus-smart-campus-backend.onrender.com/api/faculty/my-students-classes/my-class?email=${encodeURIComponent(facultyEmail)}&className=${encodeURIComponent(cls)}`
         );
         if (res.data && res.data.success) {
           roster = res.data.students || [];
@@ -189,7 +189,7 @@ export const FacultyMyStudentsAndClasses: React.FC<FacultyMyStudentsAndClassesPr
       if (!roster || roster.length === 0) {
         try {
           const res2 = await axios.get(
-            `http://localhost:5000/api/faculty/students?className=${encodeURIComponent(cls)}&email=${encodeURIComponent(facultyEmail)}`
+            `https://nexus-smart-campus-backend.onrender.com/api/faculty/students?className=${encodeURIComponent(cls)}&email=${encodeURIComponent(facultyEmail)}`
           );
           if (res2.data && res2.data.students) {
             roster = res2.data.students;
@@ -223,7 +223,7 @@ export const FacultyMyStudentsAndClasses: React.FC<FacultyMyStudentsAndClassesPr
   // Fetch Other Classes from Backend
   const fetchOtherClasses = useCallback(async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/faculty/my-students-classes/other-classes');
+      const res = await axios.get('https://nexus-smart-campus-backend.onrender.com/api/faculty/my-students-classes/other-classes');
       if (res.data && res.data.classes) {
         setOtherClassesList(res.data.classes);
       }
@@ -236,7 +236,7 @@ export const FacultyMyStudentsAndClasses: React.FC<FacultyMyStudentsAndClassesPr
   const fetchBroadcastHistory = useCallback(async () => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/faculty/my-students-classes/broadcast-history?facultyEmail=${encodeURIComponent(facultyEmail)}`
+        `https://nexus-smart-campus-backend.onrender.com/api/faculty/my-students-classes/broadcast-history?facultyEmail=${encodeURIComponent(facultyEmail)}`
       );
       if (res.data && res.data.history) {
         setBroadcastHistoryList(res.data.history);
@@ -253,7 +253,7 @@ export const FacultyMyStudentsAndClasses: React.FC<FacultyMyStudentsAndClassesPr
     let apiList: any[] = [];
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/attendance/medical/pending?className=${encodeURIComponent(selectedClass)}`
+        `https://nexus-smart-campus-backend.onrender.com/api/attendance/medical/pending?className=${encodeURIComponent(selectedClass)}`
       );
       if (res.data && res.data.certificates && Array.isArray(res.data.certificates)) {
         apiList = res.data.certificates;
@@ -287,7 +287,7 @@ export const FacultyMyStudentsAndClasses: React.FC<FacultyMyStudentsAndClassesPr
 
   const handleVerifyMedical = async (cert: any, status: 'VERIFIED' | 'REJECTED') => {
     try {
-      await axios.post('http://localhost:5000/api/attendance/medical/verify', {
+      await axios.post('https://nexus-smart-campus-backend.onrender.com/api/attendance/medical/verify', {
         applicationRef: cert.applicationRef,
         rollNumber: cert.rollNumber,
         status,
@@ -360,7 +360,7 @@ export const FacultyMyStudentsAndClasses: React.FC<FacultyMyStudentsAndClassesPr
     }
     setIsSubmittingBroadcast(true);
     try {
-      await axios.post('http://localhost:5000/api/faculty/my-students-classes/broadcast', {
+      await axios.post('https://nexus-smart-campus-backend.onrender.com/api/faculty/my-students-classes/broadcast', {
         title: broadcastTitle,
         message: broadcastMessage,
         category: broadcastCategory,
@@ -388,7 +388,7 @@ export const FacultyMyStudentsAndClasses: React.FC<FacultyMyStudentsAndClassesPr
   const handleSendAlert = async () => {
     if (!alertTitle || !alertMessage || !alertModalStudent) return;
     try {
-      await axios.post('http://localhost:5000/api/faculty/my-students-classes/alert', {
+      await axios.post('https://nexus-smart-campus-backend.onrender.com/api/faculty/my-students-classes/alert', {
         studentId: alertModalStudent.id,
         rollNumber: alertModalStudent.rollNumber,
         title: alertTitle,
@@ -409,7 +409,7 @@ export const FacultyMyStudentsAndClasses: React.FC<FacultyMyStudentsAndClassesPr
   const handleSendReminder = async () => {
     if (!reminderTitle || !reminderMessage || !reminderModalStudent) return;
     try {
-      await axios.post('http://localhost:5000/api/faculty/my-students-classes/reminder', {
+      await axios.post('https://nexus-smart-campus-backend.onrender.com/api/faculty/my-students-classes/reminder', {
         studentId: reminderModalStudent.id,
         rollNumber: reminderModalStudent.rollNumber,
         title: reminderTitle,
@@ -429,7 +429,7 @@ export const FacultyMyStudentsAndClasses: React.FC<FacultyMyStudentsAndClassesPr
   const handleExecuteTransfer = async () => {
     if (!transferModalStudent || !targetClassForTransfer) return;
     try {
-      await axios.post('http://localhost:5000/api/faculty/students/transfer', {
+      await axios.post('https://nexus-smart-campus-backend.onrender.com/api/faculty/students/transfer', {
         studentId: transferModalStudent.id,
         rollNumber: transferModalStudent.rollNumber,
         oldClassName: selectedClass,
@@ -447,7 +447,7 @@ export const FacultyMyStudentsAndClasses: React.FC<FacultyMyStudentsAndClassesPr
   const handleDeactivateStudent = async (student: any) => {
     if (!window.confirm(`Deactivate ${student.name} (${student.rollNumber})?`)) return;
     try {
-      await axios.post('http://localhost:5000/api/faculty/students/deactivate', {
+      await axios.post('https://nexus-smart-campus-backend.onrender.com/api/faculty/students/deactivate', {
         studentId: student.id,
         rollNumber: student.rollNumber,
       });

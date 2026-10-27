@@ -63,7 +63,7 @@ export const AlumniConnectionsCentral: React.FC<AlumniConnectionsCentralProps> =
     if (!userEmail) return;
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/connections/requests?userEmail=${encodeURIComponent(userEmail)}`);
+      const res = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/connections/requests?userEmail=${encodeURIComponent(userEmail)}`);
       const data = await res.json();
       if (data.status === 'success') {
         setFriends(data.friends || []);
@@ -79,7 +79,7 @@ export const AlumniConnectionsCentral: React.FC<AlumniConnectionsCentralProps> =
 
   const handleRespond = async (requestId: string, senderEmail: string, action: 'ACCEPT' | 'REJECT') => {
     try {
-      const res = await fetch('http://localhost:5000/api/connections/requests/respond', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/connections/requests/respond', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -102,7 +102,7 @@ export const AlumniConnectionsCentral: React.FC<AlumniConnectionsCentralProps> =
 
   const handleCancel = async (targetEmail: string) => {
     try {
-      const res = await fetch('http://localhost:5000/api/connections/requests/cancel', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/connections/requests/cancel', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

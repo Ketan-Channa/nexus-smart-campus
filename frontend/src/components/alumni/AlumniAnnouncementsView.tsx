@@ -21,7 +21,7 @@ export const AlumniAnnouncementsView: React.FC = () => {
   const fetchAnnouncements = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/faculty/announcements');
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/faculty/announcements');
       const data = await res.json();
       if (data.status === 'success' && data.announcements) {
         setAnnouncements(data.announcements);

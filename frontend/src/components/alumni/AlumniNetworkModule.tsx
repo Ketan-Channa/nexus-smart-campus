@@ -55,7 +55,7 @@ export const AlumniNetworkModule: React.FC<AlumniNetworkModuleProps> = ({ userRo
 
   const fetchConnectionRequestsData = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/connections/requests?userEmail=${encodeURIComponent(currentUserEmail)}`);
+      const res = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/connections/requests?userEmail=${encodeURIComponent(currentUserEmail)}`);
       const data = await res.json();
       if (data.status === 'success') {
         setIncomingRequests(data.incomingRequests || []);
@@ -70,7 +70,7 @@ export const AlumniNetworkModule: React.FC<AlumniNetworkModuleProps> = ({ userRo
   const fetchAlumniDirectory = async () => {
     setLoading(true);
     try {
-      let url = `http://localhost:5000/api/alumni/directory?department=${encodeURIComponent(department)}&graduationYear=${encodeURIComponent(graduationYear)}`;
+      let url = `https://nexus-smart-campus-backend.onrender.com/api/alumni/directory?department=${encodeURIComponent(department)}&graduationYear=${encodeURIComponent(graduationYear)}`;
       const userCollege = currentUser?.collegeName || currentUser?.college_name;
       if (userCollege) {
         url += `&collegeName=${encodeURIComponent(userCollege)}`;
@@ -92,7 +92,7 @@ export const AlumniNetworkModule: React.FC<AlumniNetworkModuleProps> = ({ userRo
 
   const fetchAlumniJobs = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/alumni/jobs');
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/alumni/jobs');
       const data = await res.json();
       if (data.status === 'success') {
         setJobsList(data.jobs || []);
@@ -138,7 +138,7 @@ export const AlumniNetworkModule: React.FC<AlumniNetworkModuleProps> = ({ userRo
     localStorage.setItem('nexus_pending_sent_requests', JSON.stringify(updatedSent));
 
     try {
-      await fetch('http://localhost:5000/api/connections/friends/request', {
+      await fetch('https://nexus-smart-campus-backend.onrender.com/api/connections/friends/request', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -175,7 +175,7 @@ export const AlumniNetworkModule: React.FC<AlumniNetworkModuleProps> = ({ userRo
     localStorage.setItem('nexus_connected_alumni', JSON.stringify(updatedConn));
 
     try {
-      await fetch('http://localhost:5000/api/connections/requests/cancel', {
+      await fetch('https://nexus-smart-campus-backend.onrender.com/api/connections/requests/cancel', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -219,7 +219,7 @@ export const AlumniNetworkModule: React.FC<AlumniNetworkModuleProps> = ({ userRo
     setIncomingRequests(incomingRequests.filter((inc) => inc.email !== targetEmail));
 
     try {
-      await fetch('http://localhost:5000/api/connections/requests/respond', {
+      await fetch('https://nexus-smart-campus-backend.onrender.com/api/connections/requests/respond', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -254,7 +254,7 @@ export const AlumniNetworkModule: React.FC<AlumniNetworkModuleProps> = ({ userRo
     setIncomingRequests(incomingRequests.filter((inc) => inc.email !== targetEmail));
 
     try {
-      await fetch('http://localhost:5000/api/connections/requests/respond', {
+      await fetch('https://nexus-smart-campus-backend.onrender.com/api/connections/requests/respond', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -272,7 +272,7 @@ export const AlumniNetworkModule: React.FC<AlumniNetworkModuleProps> = ({ userRo
   const handleSendMentorshipRequest = async () => {
     if (!selectedAlumni) return;
     try {
-      const res = await fetch('http://localhost:5000/api/alumni/mentorship/request', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/alumni/mentorship/request', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

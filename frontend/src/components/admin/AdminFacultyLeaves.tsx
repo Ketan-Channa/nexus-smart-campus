@@ -24,7 +24,7 @@ export const AdminFacultyLeaves: React.FC = () => {
   const fetchLeaves = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/admin/leaves/faculty');
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/leaves/faculty');
       const data = await res.json();
       if (data.status === 'success') {
         setLeaves(data.leaves || []);
@@ -44,7 +44,7 @@ export const AdminFacultyLeaves: React.FC = () => {
     e.preventDefault();
     if (!selectedLeave) return;
     try {
-      const res = await fetch('http://localhost:5000/api/admin/leaves/faculty/process', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/leaves/faculty/process', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -27,7 +27,7 @@ export const ParentAlumniCareer: React.FC<ParentAlumniCareerProps> = ({
   const fetchCareer = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/parent/alumni-career');
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/parent/alumni-career');
       const json = await res.json();
       if (json.success) {
         setData(json);

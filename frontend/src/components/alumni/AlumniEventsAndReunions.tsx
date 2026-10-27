@@ -55,7 +55,7 @@ export const AlumniEventsAndReunions: React.FC<AlumniEventsAndReunionsProps> = (
   const fetchEvents = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/alumni/events');
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/alumni/events');
       const data = await res.json();
       if (data.status === 'success') {
         setEvents(data.events || []);
@@ -69,7 +69,7 @@ export const AlumniEventsAndReunions: React.FC<AlumniEventsAndReunionsProps> = (
 
   const handleRsvp = async (eventId: string, rsvpStatus: 'GOING' | 'MAYBE' | 'DECLINED') => {
     try {
-      const res = await fetch(`http://localhost:5000/api/alumni/events/${eventId}/rsvp`, {
+      const res = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/alumni/events/${eventId}/rsvp`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -93,7 +93,7 @@ export const AlumniEventsAndReunions: React.FC<AlumniEventsAndReunionsProps> = (
   const handleCreateEvent = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/api/alumni/events', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/alumni/events', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

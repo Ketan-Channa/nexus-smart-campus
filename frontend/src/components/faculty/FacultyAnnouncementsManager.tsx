@@ -26,7 +26,7 @@ import axios from 'axios';
 import { type UserSession } from '../../types/auth';
 import { useRealtimeEvent } from '../../context/RealtimeContext';
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = 'https://nexus-smart-campus-backend.onrender.com/api';
 
 export interface AnnouncementItem {
   id: number;

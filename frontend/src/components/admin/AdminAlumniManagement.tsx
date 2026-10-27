@@ -24,8 +24,8 @@ export const AdminAlumniManagement: React.FC = () => {
     setLoading(true);
     try {
       const [pRes, dRes] = await Promise.all([
-        fetch('http://localhost:5000/api/admin/alumni/pending'),
-        fetch(`http://localhost:5000/api/admin/alumni/directory?search=${encodeURIComponent(searchTerm)}`),
+        fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/alumni/pending'),
+        fetch(`https://nexus-smart-campus-backend.onrender.com/api/admin/alumni/directory?search=${encodeURIComponent(searchTerm)}`),
       ]);
       const pData = await pRes.json();
       const dData = await dRes.json();
@@ -44,7 +44,7 @@ export const AdminAlumniManagement: React.FC = () => {
 
   const handleVerify = async (alumniId: number, status: 'VERIFIED' | 'REJECTED') => {
     try {
-      const res = await fetch('http://localhost:5000/api/admin/alumni/verify', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/alumni/verify', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

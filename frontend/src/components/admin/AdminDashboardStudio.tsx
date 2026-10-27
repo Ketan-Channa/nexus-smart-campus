@@ -147,7 +147,7 @@ export const AdminDashboardStudio: React.FC<AdminDashboardStudioProps> = ({ sess
   const fetchOverviewStats = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/admin/overview-stats');
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/overview-stats');
       const data = await res.json();
       if (data.status === 'success') {
         setOverviewData(data);
@@ -161,7 +161,7 @@ export const AdminDashboardStudio: React.FC<AdminDashboardStudioProps> = ({ sess
 
   const fetchUsersDirectory = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/admin/users?role=${userRoleFilter}&search=${encodeURIComponent(userSearchTerm)}`);
+      const res = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/admin/users?role=${userRoleFilter}&search=${encodeURIComponent(userSearchTerm)}`);
       const data = await res.json();
       if (data.status === 'success') {
         setUsersList(data.users || []);
@@ -173,7 +173,7 @@ export const AdminDashboardStudio: React.FC<AdminDashboardStudioProps> = ({ sess
 
   const fetchPendingAlumni = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/admin/alumni/pending');
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/alumni/pending');
       const data = await res.json();
       if (data.status === 'success') {
         setPendingAlumniList(data.pendingAlumni || []);
@@ -185,7 +185,7 @@ export const AdminDashboardStudio: React.FC<AdminDashboardStudioProps> = ({ sess
 
   const handleUpdateStatus = async (userId: number, role: string, newStatus: string) => {
     try {
-      const res = await fetch('http://localhost:5000/api/admin/users/status', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/users/status', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -211,7 +211,7 @@ export const AdminDashboardStudio: React.FC<AdminDashboardStudioProps> = ({ sess
 
   const fetchParentGovernance = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/admin/parent-governance');
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/parent-governance');
       const data = await res.json();
       if (data.status === 'success' && Array.isArray(data.relationshipRequests)) {
         setPendingParentRequests(data.relationshipRequests);
@@ -223,7 +223,7 @@ export const AdminDashboardStudio: React.FC<AdminDashboardStudioProps> = ({ sess
 
   const handleUpdateParentRelationship = async (linkId: string, status: string) => {
     try {
-      const res = await fetch('http://localhost:5000/api/admin/parent-relationship/status', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/parent-relationship/status', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -247,7 +247,7 @@ export const AdminDashboardStudio: React.FC<AdminDashboardStudioProps> = ({ sess
 
   const fetchFacultyList = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/admin/faculty');
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/faculty');
       const data = await res.json();
       if (data.status === 'success') {
         setFacultyList(data.faculty || []);
@@ -259,7 +259,7 @@ export const AdminDashboardStudio: React.FC<AdminDashboardStudioProps> = ({ sess
 
   const fetchClassList = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/admin/classes');
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/classes');
       const data = await res.json();
       if (data.status === 'success') {
         setClassList(data.classes || []);
@@ -271,7 +271,7 @@ export const AdminDashboardStudio: React.FC<AdminDashboardStudioProps> = ({ sess
 
   const fetchAttendanceSummary = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/admin/attendance/summary');
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/attendance/summary');
       const data = await res.json();
       if (data.status === 'success') {
         setAttendanceShortageList(data.shortageList || []);
@@ -283,7 +283,7 @@ export const AdminDashboardStudio: React.FC<AdminDashboardStudioProps> = ({ sess
 
   const fetchAnnouncements = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/admin/announcements');
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/announcements');
       const data = await res.json();
       if (data.status === 'success') {
         setAnnouncements(data.announcements || []);
@@ -295,7 +295,7 @@ export const AdminDashboardStudio: React.FC<AdminDashboardStudioProps> = ({ sess
 
   const fetchAuditLogs = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/admin/audit-logs');
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/audit-logs');
       const data = await res.json();
       if (data.status === 'success') {
         setAuditLogs(data.logs || []);
@@ -307,7 +307,7 @@ export const AdminDashboardStudio: React.FC<AdminDashboardStudioProps> = ({ sess
 
   const fetchSystemSettings = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/admin/system-settings');
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/system-settings');
       const data = await res.json();
       if (data.status === 'success' && data.settings) {
         setSystemSettings(data.settings);
@@ -320,7 +320,7 @@ export const AdminDashboardStudio: React.FC<AdminDashboardStudioProps> = ({ sess
   const handleAssignIncharge = async () => {
     if (!selectedFacultyId || !selectedClassCode) return;
     try {
-      const res = await fetch('http://localhost:5000/api/admin/faculty/assign-class-incharge', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/faculty/assign-class-incharge', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -349,7 +349,7 @@ export const AdminDashboardStudio: React.FC<AdminDashboardStudioProps> = ({ sess
       return;
     }
     try {
-      const res = await fetch('http://localhost:5000/api/auth/register', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -376,7 +376,7 @@ export const AdminDashboardStudio: React.FC<AdminDashboardStudioProps> = ({ sess
   const handlePublishAnnouncement = async () => {
     if (!newAnn.title || !newAnn.description) return;
     try {
-      const res = await fetch('http://localhost:5000/api/admin/announcements', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/announcements', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -400,7 +400,7 @@ export const AdminDashboardStudio: React.FC<AdminDashboardStudioProps> = ({ sess
   const handleRunAiAssistant = async () => {
     setAiLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/alumni/ai-assistant', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/alumni/ai-assistant', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

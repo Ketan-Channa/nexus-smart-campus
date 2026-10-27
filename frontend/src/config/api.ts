@@ -1,21 +1,39 @@
-const BACKEND_PORT = (import.meta as any).env?.VITE_BACKEND_PORT || '5000';
 
-export const API_BASE = `http://localhost:${BACKEND_PORT}/api`;
-export const SOCKET_URL = `http://localhost:${BACKEND_PORT}`;
+const env = (import.meta as any).env;
+
+const BACKEND_PORT = env?.VITE_BACKEND_PORT || '5000';
+
+const DEFAULT_LOCAL_API = `http://localhost:${BACKEND_PORT}/api`;
+const DEFAULT_LOCAL_SOCKET = `http://localhost:${BACKEND_PORT}`;
+
+export const API_BASE: string =
+  env?.VITE_API_URL || DEFAULT_LOCAL_API;
+
+export const SOCKET_URL: string =
+  env?.VITE_SOCKET_URL || DEFAULT_LOCAL_SOCKET;
 
 export const getApiBase = async (): Promise<string> => {
-  // Quick health check on 5000 vs 5001
-  try {
-    const res5000 = await fetch('http://localhost:5000/api/health', { method: 'HEAD', mode: 'cors' }).catch(() => null);
-    if (res5000 && res5000.ok) {
-      return 'http://localhost:5000/api';
-    }
-    const res5001 = await fetch('http://localhost:5001/api/health', { method: 'HEAD', mode: 'cors' }).catch(() => null);
-    if (res5001 && res5001.ok) {
-      return 'http://localhost:5001/api';
-    }
-  } catch (e) {
-    // fallback default
+  // Use the configured API URL on Vercel or any non-local deployment.
+  if (env?.VITE_API_URL) {
+    return env.VITE_API_URL;
   }
-  return `http://localhost:${BACKEND_PORT}/api`;
+
+  // Check local backend ports during local development.
+  try {
+    for (const port of ['5000', '5001']) {
+      const url = `http://localhost:${port}/api/health`;
+      const response = await fetch(url, {
+        method: 'HEAD',
+        mode: 'cors',
+      }).catch(() => null);
+
+      if (response?.ok) {
+        return `http://localhost:${port}/api`;
+      }
+    }
+  } catch {
+    // Fall back to the configured local API.
+  }
+
+  return DEFAULT_LOCAL_API;
 };

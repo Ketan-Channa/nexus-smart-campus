@@ -67,7 +67,7 @@ export const FacultyAttendanceRegister: React.FC<FacultyAttendanceRegisterProps>
   const fetchFacultyOptions = useCallback(async () => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/attendance/faculty/options?email=${encodeURIComponent(facultyEmail)}`
+        `https://nexus-smart-campus-backend.onrender.com/api/attendance/faculty/options?email=${encodeURIComponent(facultyEmail)}`
       );
       if (res.data && res.data.success) {
         if (res.data.classes && res.data.classes.length > 0) setClassesList(res.data.classes);
@@ -88,7 +88,7 @@ export const FacultyAttendanceRegister: React.FC<FacultyAttendanceRegisterProps>
     try {
       // Primary: Try Phase 3 attendance register API
       const res = await axios.get(
-        `http://localhost:5000/api/attendance/register?className=${encodeURIComponent(selectedClass)}&subject=${encodeURIComponent(selectedSubject)}&date=${encodeURIComponent(selectedDate)}&timeSlot=${encodeURIComponent(selectedSlot)}&facultyEmail=${encodeURIComponent(facultyEmail)}`
+        `https://nexus-smart-campus-backend.onrender.com/api/attendance/register?className=${encodeURIComponent(selectedClass)}&subject=${encodeURIComponent(selectedSubject)}&date=${encodeURIComponent(selectedDate)}&timeSlot=${encodeURIComponent(selectedSlot)}&facultyEmail=${encodeURIComponent(facultyEmail)}`
       );
 
       if (res.data && res.data.success && Array.isArray(res.data.roster) && res.data.roster.length > 0) {
@@ -106,13 +106,13 @@ export const FacultyAttendanceRegister: React.FC<FacultyAttendanceRegisterProps>
 
     try {
       const resClass = await axios.get(
-        `http://localhost:5000/api/faculty/my-students-classes/my-class?email=${encodeURIComponent(facultyEmail)}&className=${encodeURIComponent(selectedClass)}`
+        `https://nexus-smart-campus-backend.onrender.com/api/faculty/my-students-classes/my-class?email=${encodeURIComponent(facultyEmail)}&className=${encodeURIComponent(selectedClass)}`
       );
       if (resClass.data && resClass.data.students && resClass.data.students.length > 0) {
         rawStudents = resClass.data.students;
       } else {
         const resSt = await axios.get(
-          `http://localhost:5000/api/faculty/students?className=${encodeURIComponent(selectedClass)}`
+          `https://nexus-smart-campus-backend.onrender.com/api/faculty/students?className=${encodeURIComponent(selectedClass)}`
         );
         if (resSt.data && resSt.data.students) {
           rawStudents = resSt.data.students;
@@ -123,7 +123,7 @@ export const FacultyAttendanceRegister: React.FC<FacultyAttendanceRegisterProps>
     // Fetch marked attendance entries for date and slot
     try {
       const resAtt = await axios.get(
-        `http://localhost:5000/api/attendance?className=${encodeURIComponent(selectedClass)}`
+        `https://nexus-smart-campus-backend.onrender.com/api/attendance?className=${encodeURIComponent(selectedClass)}`
       );
       if (resAtt.data && resAtt.data.data) {
         resAtt.data.data.forEach((m: any) => {
@@ -224,7 +224,7 @@ export const FacultyAttendanceRegister: React.FC<FacultyAttendanceRegisterProps>
       };
 
       try {
-        const res = await axios.post('http://localhost:5000/api/attendance/mark-batch', payload);
+        const res = await axios.post('https://nexus-smart-campus-backend.onrender.com/api/attendance/mark-batch', payload);
         if (res.data && res.data.success) {
           alert(res.data.message || '✓ Attendance Register saved successfully in MySQL!');
           fetchRegister();
@@ -234,7 +234,7 @@ export const FacultyAttendanceRegister: React.FC<FacultyAttendanceRegisterProps>
         if (err.response?.status === 404) {
           // Fallback batch posting to /api/attendance/mark
           for (const r of roster) {
-            await axios.post('http://localhost:5000/api/attendance/mark', {
+            await axios.post('https://nexus-smart-campus-backend.onrender.com/api/attendance/mark', {
               rollNumber: r.rollNumber,
               studentName: r.studentName,
               className: selectedClass,
@@ -278,7 +278,7 @@ export const FacultyAttendanceRegister: React.FC<FacultyAttendanceRegisterProps>
 
     setSubmittingCorrection(true);
     try {
-      const res = await axios.put('http://localhost:5000/api/attendance/correct', {
+      const res = await axios.put('https://nexus-smart-campus-backend.onrender.com/api/attendance/correct', {
         attendanceId: correctionModalStudent.attendanceRecordId,
         rollNumber: correctionModalStudent.rollNumber,
         studentName: correctionModalStudent.studentName,
@@ -303,7 +303,7 @@ export const FacultyAttendanceRegister: React.FC<FacultyAttendanceRegisterProps>
       if (err.response?.status === 404 || err.response?.status === 500) {
         try {
           // Fallback direct update/insert to /api/attendance/mark
-          await axios.post('http://localhost:5000/api/attendance/mark', {
+          await axios.post('https://nexus-smart-campus-backend.onrender.com/api/attendance/mark', {
             rollNumber: correctionModalStudent.rollNumber,
             studentName: correctionModalStudent.studentName,
             className: selectedClass,

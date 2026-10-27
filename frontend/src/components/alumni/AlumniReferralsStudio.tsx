@@ -52,7 +52,7 @@ export const AlumniReferralsStudio: React.FC<AlumniReferralsStudioProps> = ({
     if (!userEmail) return;
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/alumni/referrals?userEmail=${encodeURIComponent(userEmail)}`);
+      const res = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/alumni/referrals?userEmail=${encodeURIComponent(userEmail)}`);
       const data = await res.json();
       if (data.status === 'success') {
         setReferrals(data.referrals || []);
@@ -69,7 +69,7 @@ export const AlumniReferralsStudio: React.FC<AlumniReferralsStudioProps> = ({
     if (!respondingRef) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/alumni/referrals/${respondingRef.referral_id}/respond`, {
+      const res = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/alumni/referrals/${respondingRef.referral_id}/respond`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

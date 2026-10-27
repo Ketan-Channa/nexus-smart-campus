@@ -63,7 +63,7 @@ export const AlumniJobBoardCentral: React.FC<AlumniJobBoardCentralProps> = ({
       if (filterMode !== 'All') params.append('workMode', filterMode);
       if (filterType !== 'All') params.append('employmentType', filterType);
 
-      const res = await fetch(`http://localhost:5000/api/alumni/jobs?${params.toString()}`);
+      const res = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/alumni/jobs?${params.toString()}`);
       const data = await res.json();
       if (data.status === 'success') {
         setJobs(data.jobs || []);
@@ -78,7 +78,7 @@ export const AlumniJobBoardCentral: React.FC<AlumniJobBoardCentralProps> = ({
   const handlePostJob = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/api/alumni/jobs', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/alumni/jobs', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -119,7 +119,7 @@ export const AlumniJobBoardCentral: React.FC<AlumniJobBoardCentralProps> = ({
   const handleToggleJobStatus = async (jobId: string, currentStatus: string) => {
     const nextStatus = currentStatus === 'ACTIVE' ? 'CLOSED' : 'ACTIVE';
     try {
-      await fetch(`http://localhost:5000/api/alumni/jobs/${jobId}`, {
+      await fetch(`https://nexus-smart-campus-backend.onrender.com/api/alumni/jobs/${jobId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: nextStatus }),

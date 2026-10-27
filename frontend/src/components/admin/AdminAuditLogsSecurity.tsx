@@ -20,8 +20,8 @@ export const AdminAuditLogsSecurity: React.FC = () => {
     setLoading(true);
     try {
       const [aRes, mRes] = await Promise.all([
-        fetch('http://localhost:5000/api/admin/audit-logs'),
-        fetch('http://localhost:5000/api/admin/audit-logs/marks'),
+        fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/audit-logs'),
+        fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/audit-logs/marks'),
       ]);
       const aData = await aRes.json();
       const mData = await mRes.json();

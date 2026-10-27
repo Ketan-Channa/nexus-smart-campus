@@ -40,7 +40,7 @@ export const FacultyTimetable: React.FC<FacultyTimetableProps> = ({
     setIsLoading(true);
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/academics/faculty-schedule?teacherCode=${encodeURIComponent(facultyName)}&day=${selectedDay}`
+        `https://nexus-smart-campus-backend.onrender.com/api/academics/faculty-schedule?teacherCode=${encodeURIComponent(facultyName)}&day=${selectedDay}`
       );
       if (res.data && res.data.schedule && res.data.schedule.length > 0) {
         setScheduleList(res.data.schedule);
@@ -116,7 +116,7 @@ export const FacultyTimetable: React.FC<FacultyTimetableProps> = ({
   const fetchVacantVenues = useCallback(async () => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/academics/vacant-venues?day=${vacantDay}&startTime=${encodeURIComponent(vacantTimeSlot)}`
+        `https://nexus-smart-campus-backend.onrender.com/api/academics/vacant-venues?day=${vacantDay}&startTime=${encodeURIComponent(vacantTimeSlot)}`
       );
       if (res.data && res.data.occupiedRooms) {
         setOccupiedRoomsList(res.data.occupiedRooms);
@@ -130,7 +130,7 @@ export const FacultyTimetable: React.FC<FacultyTimetableProps> = ({
   const fetchRoomTimeline = useCallback(async () => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/academics/room-timeline?roomCode=${encodeURIComponent(selectedRoom)}&day=${selectedDay}`
+        `https://nexus-smart-campus-backend.onrender.com/api/academics/room-timeline?roomCode=${encodeURIComponent(selectedRoom)}&day=${selectedDay}`
       );
       if (res.data && res.data.timeline) {
         setRoomTimelineList(res.data.timeline);

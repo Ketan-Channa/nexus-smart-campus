@@ -32,7 +32,7 @@ import axios from 'axios';
 import { type UserSession } from '../../types/auth';
 import { useRealtimeEvent } from '../../context/RealtimeContext';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://nexus-smart-campus-backend.onrender.com';
 
 export interface StudentDocumentItem {
   id: string;
@@ -198,7 +198,7 @@ export const StudentDocuments: React.FC<StudentDocumentsProps> = ({ session }) =
   useEffect(() => {
     const fetchDbCredentials = async () => {
       try {
-        const stuRes = await axios.get('http://localhost:5000/api/admin/users?role=Student');
+        const stuRes = await axios.get('https://nexus-smart-campus-backend.onrender.com/api/admin/users?role=Student');
         if (stuRes.data?.users && Array.isArray(stuRes.data.users)) {
           const matched = stuRes.data.users.find(
             (u: any) =>
@@ -217,7 +217,7 @@ export const StudentDocuments: React.FC<StudentDocumentsProps> = ({ session }) =
           }
         }
 
-        const facRes = await axios.get('http://localhost:5000/api/admin/faculty');
+        const facRes = await axios.get('https://nexus-smart-campus-backend.onrender.com/api/admin/faculty');
         if (facRes.data?.faculty && Array.isArray(facRes.data.faculty)) {
           const inchargeFac = facRes.data.faculty.find(
             (f: any) =>

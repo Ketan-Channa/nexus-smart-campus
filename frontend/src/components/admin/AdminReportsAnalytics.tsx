@@ -22,7 +22,7 @@ export const AdminReportsAnalytics: React.FC = () => {
   const fetchReports = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/admin/reports/analytics');
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/reports/analytics');
       const data = await res.json();
       if (data.status === 'success') {
         setReports(data.reports || {});

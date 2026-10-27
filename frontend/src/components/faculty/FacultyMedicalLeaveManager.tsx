@@ -96,7 +96,7 @@ export const FacultyMedicalLeaveManager: React.FC<FacultyMedicalLeaveManagerProp
     setLoading(true);
     setErrorMsg(null);
     try {
-      const res = await axios.get('http://localhost:5000/api/attendance/medical/list', {
+      const res = await axios.get('https://nexus-smart-campus-backend.onrender.com/api/attendance/medical/list', {
         params: {
           className: selectedClassFilter,
           facultyEmail,
@@ -155,7 +155,7 @@ export const FacultyMedicalLeaveManager: React.FC<FacultyMedicalLeaveManagerProp
     // If currently PENDING, set status to UNDER_REVIEW
     if (reqItem.status === 'PENDING') {
       try {
-        await axios.post('http://localhost:5000/api/attendance/medical/review', {
+        await axios.post('https://nexus-smart-campus-backend.onrender.com/api/attendance/medical/review', {
           applicationRef: reqItem.applicationRef,
           action: 'START_REVIEW',
           verifierEmail: facultyEmail,
@@ -166,7 +166,7 @@ export const FacultyMedicalLeaveManager: React.FC<FacultyMedicalLeaveManagerProp
 
     // Fetch full student profile details
     try {
-      const res = await axios.get(`http://localhost:5000/api/attendance/medical/detail/${reqItem.applicationRef}`);
+      const res = await axios.get(`https://nexus-smart-campus-backend.onrender.com/api/attendance/medical/detail/${reqItem.applicationRef}`);
       if (res.data && res.data.student) {
         setSelectedStudentDetail(res.data.student);
       } else {
@@ -195,7 +195,7 @@ export const FacultyMedicalLeaveManager: React.FC<FacultyMedicalLeaveManagerProp
     setActionSuccessMsg(null);
 
     try {
-      const res = await axios.post('http://localhost:5000/api/attendance/medical/review', {
+      const res = await axios.post('https://nexus-smart-campus-backend.onrender.com/api/attendance/medical/review', {
         applicationRef: selectedRequest.applicationRef,
         action: actionType,
         verifierEmail: facultyEmail,

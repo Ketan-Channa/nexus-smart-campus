@@ -28,8 +28,8 @@ export const AdminExamsResultsGovernance: React.FC = () => {
     setLoading(true);
     try {
       const [mRes, sRes] = await Promise.all([
-        fetch(`http://localhost:5000/api/admin/exams/marks?search=${encodeURIComponent(searchTerm)}`),
-        fetch('http://localhost:5000/api/admin/exams/schemes'),
+        fetch(`https://nexus-smart-campus-backend.onrender.com/api/admin/exams/marks?search=${encodeURIComponent(searchTerm)}`),
+        fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/exams/schemes'),
       ]);
       const mData = await mRes.json();
       const sData = await sRes.json();
@@ -50,7 +50,7 @@ export const AdminExamsResultsGovernance: React.FC = () => {
     e.preventDefault();
     if (!selectedMark || !newScore || !correctionReason) return;
     try {
-      const res = await fetch('http://localhost:5000/api/admin/exams/marks/correct', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/exams/marks/correct', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

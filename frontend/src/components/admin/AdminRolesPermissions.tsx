@@ -33,7 +33,7 @@ export const AdminRolesPermissions: React.FC = () => {
   const fetchAdmins = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/admin/administrators');
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/administrators');
       const data = await res.json();
       if (data.status === 'success') {
         setAdmins(data.administrators || []);
@@ -52,7 +52,7 @@ export const AdminRolesPermissions: React.FC = () => {
   const handleCreateAdmin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/api/admin/administrators', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/administrators', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...newAdmin, adminEmail: 'admin@nexus.edu' }),
@@ -73,7 +73,7 @@ export const AdminRolesPermissions: React.FC = () => {
     e.preventDefault();
     if (!selectedAdmin) return;
     try {
-      const res = await fetch('http://localhost:5000/api/admin/administrators/access-level', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/administrators/access-level', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

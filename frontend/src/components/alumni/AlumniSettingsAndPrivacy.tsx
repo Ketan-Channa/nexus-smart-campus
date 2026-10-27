@@ -37,7 +37,7 @@ export const AlumniSettingsAndPrivacy: React.FC<AlumniSettingsAndPrivacyProps> =
   const fetchVerificationStatus = async () => {
     if (!userEmail) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/alumni/verification-status/${encodeURIComponent(userEmail)}`);
+      const res = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/alumni/verification-status/${encodeURIComponent(userEmail)}`);
       const data = await res.json();
       if (data.status === 'success' && data.verification) {
         setVerification(data.verification);
@@ -51,7 +51,7 @@ export const AlumniSettingsAndPrivacy: React.FC<AlumniSettingsAndPrivacyProps> =
     e.preventDefault();
     setSavingPrivacy(true);
     try {
-      const res = await fetch('http://localhost:5000/api/alumni/profile', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/alumni/profile', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -83,7 +83,7 @@ export const AlumniSettingsAndPrivacy: React.FC<AlumniSettingsAndPrivacyProps> =
     }
 
     try {
-      const res = await fetch('http://localhost:5000/api/auth/reset-password', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/auth/reset-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

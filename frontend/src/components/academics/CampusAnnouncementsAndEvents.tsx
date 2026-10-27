@@ -197,7 +197,7 @@ export const CampusAnnouncementsAndEvents: React.FC<CampusAnnouncementsAndEvents
   // Fetch announcements from authoritative MySQL backend
   const fetchAnnouncements = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/faculty/announcements');
+      const res = await axios.get('https://nexus-smart-campus-backend.onrender.com/api/faculty/announcements');
       if (res.data?.success && Array.isArray(res.data?.announcements)) {
         const mapped: AnnouncementItem[] = res.data.announcements.map((a: any) => ({
           id: a.announcementId || String(a.id),
@@ -301,7 +301,7 @@ export const CampusAnnouncementsAndEvents: React.FC<CampusAnnouncementsAndEvents
     }
 
     try {
-      await axios.post('http://localhost:5000/api/faculty/announcements', {
+      await axios.post('https://nexus-smart-campus-backend.onrender.com/api/faculty/announcements', {
         title: newTitle,
         message: newContent,
         category: newCategory,

@@ -38,7 +38,7 @@ export const ParentFeedbackView: React.FC<ParentFeedbackViewProps> = ({
     setLoading(true);
     try {
       const res = await fetch(
-        `http://localhost:5000/api/parent/feedback?email=${encodeURIComponent(
+        `https://nexus-smart-campus-backend.onrender.com/api/parent/feedback?email=${encodeURIComponent(
           parentEmail
         )}&studentRoll=${encodeURIComponent(selectedChild.roll_number)}`
       );
@@ -63,7 +63,7 @@ export const ParentFeedbackView: React.FC<ParentFeedbackViewProps> = ({
 
     setSubmitting(true);
     try {
-      const res = await fetch('http://localhost:5000/api/parent/feedback', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/parent/feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

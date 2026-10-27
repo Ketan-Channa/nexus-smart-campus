@@ -21,7 +21,7 @@ export const AdminCommunityModeration: React.FC = () => {
   const fetchModeration = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/admin/moderation/reports');
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/moderation/reports');
       const json = await res.json();
       if (json.status === 'success') {
         setData(json);
@@ -39,7 +39,7 @@ export const AdminCommunityModeration: React.FC = () => {
 
   const handleModerate = async (reportId: number, targetId: string, action: 'DELETE_POST' | 'DISMISS') => {
     try {
-      const res = await fetch('http://localhost:5000/api/admin/moderation/action', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/moderation/action', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

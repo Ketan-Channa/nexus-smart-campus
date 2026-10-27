@@ -40,7 +40,7 @@ export const AdminSafetyGovernance: React.FC = () => {
   const fetchSafetyData = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/admin/safety/overview');
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/safety/overview');
       const json = await res.json();
       if (json.status === 'success') {
         setData(json);
@@ -60,7 +60,7 @@ export const AdminSafetyGovernance: React.FC = () => {
     e.preventDefault();
     if (!selectedAlert) return;
     try {
-      const res = await fetch('http://localhost:5000/api/admin/safety/sos/status', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/safety/sos/status', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -87,7 +87,7 @@ export const AdminSafetyGovernance: React.FC = () => {
     e.preventDefault();
     if (!selectedReport) return;
     try {
-      const res = await fetch('http://localhost:5000/api/admin/safety/reports/status', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/safety/reports/status', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

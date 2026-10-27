@@ -25,7 +25,7 @@ export const FacultyAssignments: React.FC = () => {
   // Fetch published assignments
   const fetchAssignments = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/faculty/assignments');
+      const res = await axios.get('https://nexus-smart-campus-backend.onrender.com/api/faculty/assignments');
       if (res.data && res.data.assignments) {
         setPublishedAssignments(res.data.assignments);
       } else {
@@ -45,7 +45,7 @@ export const FacultyAssignments: React.FC = () => {
     if (!activeSubmissionModal) return;
     const fetchSubmissions = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/faculty/submissions?assignmentId=${encodeURIComponent(activeSubmissionModal.assignment_id || activeSubmissionModal.id)}`);
+        const res = await axios.get(`https://nexus-smart-campus-backend.onrender.com/api/faculty/submissions?assignmentId=${encodeURIComponent(activeSubmissionModal.assignment_id || activeSubmissionModal.id)}`);
         if (res.data && res.data.submissions) {
           setSubmissionsList(res.data.submissions);
         } else {

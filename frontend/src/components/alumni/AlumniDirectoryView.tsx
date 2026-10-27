@@ -74,7 +74,7 @@ export const AlumniDirectoryView: React.FC<AlumniDirectoryViewProps> = ({
       if (mentorshipOnly) params.append('mentorshipOnly', 'true');
       if (jobProviderOnly) params.append('jobProviderOnly', 'true');
 
-      const res = await fetch(`http://localhost:5000/api/alumni/directory?${params.toString()}`);
+      const res = await fetch(`https://nexus-smart-campus-backend.onrender.com/api/alumni/directory?${params.toString()}`);
       const data = await res.json();
       if (data.status === 'success') {
         setAlumni(data.alumni || []);
@@ -91,7 +91,7 @@ export const AlumniDirectoryView: React.FC<AlumniDirectoryViewProps> = ({
     if (!connectingAlumni) return;
 
     try {
-      const res = await fetch('http://localhost:5000/api/connections/friends/request', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/connections/friends/request', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -118,7 +118,7 @@ export const AlumniDirectoryView: React.FC<AlumniDirectoryViewProps> = ({
     if (!mentoringAlumni) return;
 
     try {
-      const res = await fetch('http://localhost:5000/api/alumni/mentorship/request', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/alumni/mentorship/request', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

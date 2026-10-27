@@ -234,7 +234,7 @@ export const EventsAndUpdates: React.FC<EventsAndUpdatesProps> = ({ session, def
 
   const fetchDbAnnouncements = React.useCallback(async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/faculty/announcements', {
+      const res = await axios.get('https://nexus-smart-campus-backend.onrender.com/api/faculty/announcements', {
         params: { className: 'B.TECH CSE 2023 A' },
       });
       if (res.data.success) {
@@ -247,7 +247,7 @@ export const EventsAndUpdates: React.FC<EventsAndUpdatesProps> = ({ session, def
 
   const fetchDbEvents = React.useCallback(async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/alumni/events');
+      const res = await axios.get('https://nexus-smart-campus-backend.onrender.com/api/alumni/events');
       if (res.data.status === 'success' && Array.isArray(res.data.events)) {
         const dbEvts: FestEventItem[] = res.data.events.map((dbE: any) => ({
           id: dbE.event_id || `db-evt-${dbE.id}`,
@@ -316,7 +316,7 @@ export const EventsAndUpdates: React.FC<EventsAndUpdatesProps> = ({ session, def
 
   const handleAcknowledgeAnnouncement = async (announcementId: string) => {
     try {
-      const res = await axios.post(`http://localhost:5000/api/faculty/announcements/${announcementId}/acknowledge`, {
+      const res = await axios.post(`https://nexus-smart-campus-backend.onrender.com/api/faculty/announcements/${announcementId}/acknowledge`, {
         studentEmail,
         studentName,
         studentRoll,
@@ -338,7 +338,7 @@ export const EventsAndUpdates: React.FC<EventsAndUpdatesProps> = ({ session, def
 
     try {
       setSubmittingQuestion(true);
-      const res = await axios.post(`http://localhost:5000/api/faculty/announcements/${questionModalAncId}/questions`, {
+      const res = await axios.post(`https://nexus-smart-campus-backend.onrender.com/api/faculty/announcements/${questionModalAncId}/questions`, {
         studentEmail,
         studentName,
         studentRoll,
@@ -496,7 +496,7 @@ export const EventsAndUpdates: React.FC<EventsAndUpdatesProps> = ({ session, def
 
     // Save to Database
     try {
-      const res = await axios.post('http://localhost:5000/api/alumni/events', {
+      const res = await axios.post('https://nexus-smart-campus-backend.onrender.com/api/alumni/events', {
         organizerEmail: session?.email || 'faculty@nexus.edu',
         organizerName: publisherName || session?.name || 'Faculty Member',
         eventName: eventTitle,

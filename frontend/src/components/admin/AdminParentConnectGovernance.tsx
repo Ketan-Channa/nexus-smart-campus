@@ -26,8 +26,8 @@ export const AdminParentConnectGovernance: React.FC = () => {
     setLoading(true);
     try {
       const [mRes, fRes] = await Promise.all([
-        fetch('http://localhost:5000/api/admin/parents/meetings'),
-        fetch('http://localhost:5000/api/admin/parents/feedback'),
+        fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/parents/meetings'),
+        fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/parents/feedback'),
       ]);
       const mData = await mRes.json();
       const fData = await fRes.json();
@@ -48,7 +48,7 @@ export const AdminParentConnectGovernance: React.FC = () => {
     e.preventDefault();
     if (!selectedFeedback || !responseText) return;
     try {
-      const res = await fetch('http://localhost:5000/api/admin/parents/feedback/resolve', {
+      const res = await fetch('https://nexus-smart-campus-backend.onrender.com/api/admin/parents/feedback/resolve', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
